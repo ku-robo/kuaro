@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--*******************************
+*	sample lanunch
+***********************************-->
+
+<launch>
+  <master auto="start"/>
+
+  <!-- 外部変更するための変数  ここでは使わないものもあるが変更するな-->
+  <!-- マップ用のパス-->
+  <arg name="map_path" />
+  <!-- 修正したマップ用のパス-->
+  <arg name="remap_path" />
+  <!-- waypointのパス-->
+  <arg name="waypoint_path" />
+  <!-- 修正したwaypointのパス-->
+  <arg name="rewaypoint_path" />
+  <!-- データ収集bag用のパス-->
+  <arg name="data_gather_bag_path" />
+  <!-- 本番bag用のパス-->
+  <arg name="production_bag_path" />
+
+  <!-- cpp -->
+  <node name="uway_pointmaker_2019" pkg="2019_autonomous_mobile_robot" type="uway_pointmaker_2019" required="true" output="screen">
+    <rosparam file="$(arg remap_path)" command="load"/>
+    <rosparam>
+      load_file_name: $(arg waypoint_path)
+      output_file_name: $(arg rewaypoint_path)
+      click_width: 30
+    </rosparam>
+  </node>
+
+  <!-- python -->
+  <node name="uway_pointmaker_py" pkg="2019_tsukuba_challenge" type="uway.py" required="true" output="screen">
+    <rosparam file="$(arg remap_path)" command="load"/>
+  </node>
+</launch>

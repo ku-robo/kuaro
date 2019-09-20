@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+
+<launch>
+  <node pkg="map_server" type="map_saver" name="map_saver" args="-f /home/robo/2018_tsukuba/20181111_park_last/map_last" />
+</launch>

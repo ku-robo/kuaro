@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+
+<!--*******************************
+*	restaurant lanunch 2017_12_22
+***********************************-->
+
+<launch>
+  <master auto="start"/>
+
+  <!--okatech-->
+  <node pkg="okatech_kuaro" type="okatech_kuaro" name="okatech_kuaro" output="screen">
+    <param name="sub_serial_topic" value="/serial_receive"/>
+    <param name="sub_cmdvel_topic" value="/cmd_vel"/>
+    <param name="pub_odom_imu_topic" value="/odom_default"/>
+    <param name="frame_id" value="odom_default"/>
+    <param name="child_frame_id" value="base_footprint_odom_default"/>
+    <!-- <remap from="tf" to="tf_old"/> -->
+  </node>-->
+
+
+  <!--serial-->
+  <node pkg="serial_communication" type="serial_communication" name="serial_communication" output="screen"/>
+
+
+  <!--imu-->
+  <node name="microstrain_3dm_gx5_25_node" pkg="microstrain_3dm_gx5_45" type="microstrain_3dm_gx5_25_node" output="screen">
+    <param name="port" value="/dev/ttyACM0" type="str" />
+    <param name="baudrate" value="115200" type="int" />
+    <param name="device_setup" value="true" type="bool" />
+    <!-- General Settings -->
+    <param name="readback_settings" value="true" type="bool" />
+    <param name="save_settings" value="false" type="bool" />
+    <param name="auto_init" value="true" type="bool" />
+    <!-- AHRS Settings -->
+    <param name="publish_imu" value="false" type="bool" />
+    <param name="imu_raw_rate" value="50" type="int" />
+    <param name="imu_frame_id" value="imu" type="str" />
+    <param name="imu_raw_topic" value="imu_raw/data" type="str" />
+    <!-- Setting manual declination is not yet implemented/testes -->
+    <!-- Declination source 1=None, 2=magnetic, 3=manual -->
+    <param name="declination_source" value="2" type="int" />
+    <param name="declination" value="0.23" type="double" />
+    <param name="publish_imu_filltered" value="true" type="bool" />
+    <param name="imu_filtered_rate" value="500" type="int" />
+    <param name="imu_filtered_topic" value="imu_filtered/data" type="str" />
+  </node>
+
+  <node pkg="tf" type="static_transform_publisher" name="imu_to_base_link" args="0 0 0 0 3.14159 0 /base_link /imu 100" />
+
+
+  <!--imu_transform-->
+  <node pkg="imu_transformer" type="imu_transformer_node" name="imu_data_transformer" output="screen">
+    <remap from="imu_in" to="imu_filtered"/>
+    <remap from="imu_out" to="imu_out"/>
+    <param name="target_frame" value="base_link"/>
+  </node>
+
+
+  <!-- odom_imu_combine -->
+  <node pkg="odom_imu_combine" type="odom_imu_combine" name="odom_imu_combine" output="screen">
+    <param name="sub_odom_topic" value="/odom_default"/>
+    <param name="sub_imu_topic" value="/imu_out/data"/>
+    <param name="pub_odom_imu_topic" value="/odom_gyro"/>
+    <param name="frame_id" value="odom_gyro"/>
+    <param name="child_frame_id" value="base_footprint_odomgyro"/>
+    <remap from="tf" to="tf_old"/>
+  </node>
+
+
+  <!-- urg_node  -->
+  <node pkg="urg_node" type="urg_node" name="urg_node">
+    <param name="angle_min" value="-1.1345"/>
+    <param name="angle_max" value="1.1345"/>
+  </node>
+  <node pkg="tf" type="static_transform_publisher" name="laser_to_base_link_front" args="0.10 0.0 0.20 0.0 0.0 3.14  /base_link /laser 100" />
+
+  <!-- localization -->
+  <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
+    <param name="odom_frame" value="odom"/>
+    <param name="base_frame" value="base_link"/>
+    <param name="map_frame" value="map"/>
+    <param name="map_update_interval" value="5.0"/>
+    <param name="maxUrange" value="30.0"/>
+    <param name="sigma" value="0.05"/>
+    <param name="kernelSize" value="1"/>
+    <param name="lstep" value="0.05"/>
+    <param name="astep" value="0.05"/>
+    <param name="iterations" value="5"/>
+    <param name="lsigma" value="0.075"/>
+    <param name="ogain" value="3.0"/>
+    <param name="lskip" value="0"/>
+    <param name="srr" value="0.01"/>
+    <param name="srt" value="0.02"/>
+    <param name="str" value="0.01"/>
+    <param name="stt" value="0.02"/>
+    <param name="linearUpdate" value="0.10"/>
+    <param name="angularUpdate" value="0.05"/>
+    <param name="temporalUpdate" value="-1.0"/>
+    <param name="resampleThreshold" value="0.5"/>
+    <param name="particles" value="80"/>
+    <param name="xmin" value="-10.0"/>
+    <param name="ymin" value="-10.0"/>
+    <param name="xmax" value="10.0"/>
+    <param name="ymax" value="10.0"/>
+    <param name="delta" value="0.05"/>
+    <param name="llsamplerange" value="0.01"/>
+    <param name="llsamplestep" value="0.01"/>
+    <param name="lasamplerange" value="0.005"/>
+    <param name="lasamplestep" value="0.005"/>
+  </node>
+
+  <!-- planner -->
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find 2018_tsukuba_challenge)/param_teb/move_base_params.yaml" command="load"/>
+    <rosparam file="$(find 2018_tsukuba_challenge)/param_teb/costmap_common_global_params.yaml" command="load" ns="global_costmap"/>
+    <rosparam file="$(find 2018_tsukuba_challenge)/param_teb/costmap_common_local_params.yaml" command="load" ns="local_costmap"/>
+    <rosparam file="$(find 2018_tsukuba_challenge)/param_teb/local_costmap_params.yaml" command="load"/>
+    <rosparam file="$(find 2018_tsukuba_challenge)/param_teb/global_costmap_params.yaml" command="load"/>
+    <rosparam file="$(find 2018_tsukuba_challenge)/param_teb/base_local_planner_params.yaml" command="load"/>
+    <rosparam file="$(find 2018_tsukuba_challenge)/param_teb/base_global_planner_params.yaml" command="load"/>
+    <rosparam file="$(find 2018_tsukuba_challenge)/param_teb/move_slow_and_clear_params.yaml" command="load"/>
+    <rosparam file="$(find 2018_tsukuba_challenge)/param_teb/recovery_mode_params.yaml" command="load"/>
+  </node>
+
+  <!-- rviz -->
+  <node pkg="rviz" type="rviz" name="rviz" args="-d /home/robo/catkin_ws/src/2018_tsukuba_challenge/rviz/robocup.rviz"/>
+
+</launch>

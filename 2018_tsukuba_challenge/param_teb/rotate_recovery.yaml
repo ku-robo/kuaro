@@ -1,0 +1,3 @@
+RotateRecovery:
+   sim_granularity: 0.017
+   frequency: 20.0

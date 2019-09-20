@@ -1,0 +1,7 @@
+<library path="lib/libjoy_con">
+  <class name="joy_con/ModeJoyCon" type="joy_con::ModeJoyCon" base_class_type="move_core::MoveMode">
+    <description>
+      This plugin has the function that we can control the robot by joy-con.
+    </description>
+  </class>
+</library>

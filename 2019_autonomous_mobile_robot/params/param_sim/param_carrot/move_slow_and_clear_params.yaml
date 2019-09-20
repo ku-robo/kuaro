@@ -1,0 +1,6 @@
+MoveSlowAndClear:
+   clearing_distance: 2.0
+   limited_trans_speed: 0.01 #0.20
+   limited_rot_speed: 0.01 #0.30
+   limited_distance: 0.01 #1.0
+   planner_namespace: TebLocalPlannerROS

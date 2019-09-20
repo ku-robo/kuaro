@@ -1,0 +1,7 @@
+<library path="lib/libstop_and_go">
+  <class name="stop_and_go/ModeStopAndGo" type="stop_and_go::ModeStopAndGo" base_class_type="move_core::MoveMode">
+    <description>
+      This plugin has the function that the robot stops moving and moves again.
+    </description>
+  </class>
+</library>

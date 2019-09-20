@@ -1,0 +1,3 @@
+ModeJoyCon:
+  sub_topic_name: /joy
+  joy_con_type_name: joy_con_type2/JoyCon

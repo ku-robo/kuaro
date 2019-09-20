@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <arg name="file_name" default="/home/robo/2018_tsukuba/20181111_park_last/waypoint_rere.txt"/>
+
+
+  <!-- person detection -->
+  <node pkg="2018_tsukuba_challenge" type="velodyne_detection_2018" name="velodyne_detection_2018">
+    <param name="velodyne_height" value="1.1" />
+    <param name="TmpWidth" type="int" value="640" />
+    <param name="TmpHeight" type="int" value="480" />
+    <param name="voxel_size" value="0.01" />
+    <param name="seg_point_min" value="10.0" />
+    <param name="seg_point_max" value="1000.0" />
+    <param name="seg_distance" value="0.05" />
+  </node>
+
+
+  <!-- navigation to person -->
+  <node pkg="2018_tsukuba_challenge" type="person_manager_2018" name="person_manager_2018" output="screen">
+    <param name="read_file" value="$(arg file_name)"/>
+    <param name="distance" value="1.5"/>
+    <!-- 後に下がる時間 -->
+    <param name="time_limit" value="5.0"/>
+    <!-- 後に下がる速度 -->
+    <param name="back_vel" value="-0.1"/>
+    <param name="start_point" value="0"/> <!-- 298 door 164 search_area 80 tenji -->
+    <!-- 0なら3Dの地図，1なら2Dの地図 -->
+    <param name="map_flag" value="1"/>
+    <param name="danger_scan_count" value="50"/>
+    <param name="danger_range_x" value="0.3"/>
+    <param name="danger_range_y" value="0.4"/>
+    <remap from="/cmd_vel" to="/cmd_vel"/>
+  </node>
+
+
+  <node pkg="2018_tsukuba_challenge" type="waypoint_publisher_2018" name="waypoint_publisher_2018">
+    <param name="read_file" value="$(arg file_name)"/>
+  </node>
+
+
+  <node pkg="tf" type="static_transform_publisher" name="poly" args="0 0 0 0 0 0 /my_frame /map 100"/>
+
+</launch>

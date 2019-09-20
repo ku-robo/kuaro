@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--*******************************
+*	sample lanunch
+***********************************-->
+
+<launch>
+  <master auto="start"/>
+  <!-- cpp -->
+  <node name="uway_pointmaker_2018" pkg="2018_tsukuba_challenge" type="uway_pointmaker_2018" required="true" output="screen">
+    <rosparam file="/home/robo/map.yaml" command="load"/>
+    <rosparam>
+      load_file_name: /home/robo/612_waypoint.txt
+      output_file_name: /home/robo/waypointout.txt
+      click_width: 30
+    </rosparam>
+  </node>
+
+  <!-- python -->
+  <node name="uway_pointmaker_py" pkg="2018_tsukuba_challenge" type="uway.py" required="true" output="screen">
+    <rosparam file="/home/robo/map.yaml" command="load"/>
+  </node>
+</launch>

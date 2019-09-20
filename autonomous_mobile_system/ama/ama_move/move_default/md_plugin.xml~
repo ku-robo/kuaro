@@ -1,0 +1,7 @@
+<library path="lib/libmove_default">
+  <class name="move_default/MoveDefault" type="move_default::MoveDefault" base_class_type="ama_core::AMAMove">
+    <description>
+      This plugin has the function that the robot stops moving and moves again.
+    </description>
+  </class>
+</library>

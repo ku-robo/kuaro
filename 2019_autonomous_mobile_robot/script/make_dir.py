@@ -1,0 +1,34 @@
+#!/usr/bin/env python
+#coding:utf-8
+import rospy
+import os
+
+def sprt_cmbn_path(*dataset):#パスを自動で""/"でつなぐ
+        # *_data=繋ぎたい名前 ex) exp/test というパスが作りたければ，*_data に　"exp","test"を入れる
+        data = ""
+        for d in dataset:
+            if type(d) is tuple or type(d) is list:
+                for unit_d in d:
+                    data = data + unicode(unit_d) + "/"
+            else:
+                data = data + unicode(d) + "/"
+        return data[:-1]
+
+def make_dir():
+    plus_dict = {"map":["","re"], "bagfile":["data_gather_","production_"],"waypoint":["","re","final"],"branchpoint":[""], "branchpoint_index":[""]}
+    dtype_list = ["map", "bagfile", "waypoint", "branchpoint", "branchpoint_index"]
+
+
+    # 親ディレクトリ
+    base_path = rospy.get_param("~make_base_path","/home/robo/")
+    print(type(base_path))
+    for dtype in dtype_list:
+        for plus_dtype in plus_dict[dtype]:
+            current_path = sprt_cmbn_path(base_path, plus_dtype+dtype)
+            if not os.path.exists(current_path):
+                os.makedirs(current_path)
+                print(current_path)
+
+
+rospy.init_node('~')
+make_dir()

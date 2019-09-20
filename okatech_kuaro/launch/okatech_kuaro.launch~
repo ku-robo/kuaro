@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <master auto="start"/>
+
+  <!--okatech-->
+  <node pkg="okatech_kuaro" type="okatech_kuaro" name="okatech_kuaro" output="screen"/>
+
+  <!--serial-->
+  <!--<node pkg="rosserial_python" name="rosserial_python" type="serial_node.py" output="screen">
+    <param name="~port" value="/dev/ttyUSB0"/>
+    <param name="~baud" value="57600"/>
+  </node>-->
+
+  <!--controlar-->
+  <!--Push the left frontal button labeled as 'LB' to activate cmd_vel publishing.Move the left stick around to control the velocity.-->
+
+  <include file="$(find turtlebot_teleop)/launch/includes/velocity_smoother.launch.xml"/>
+
+  <node pkg="okatech_kuaro" type="kuaro_joy" name="kuaro_joy" output="screen">
+    <param name="scale_angular" value="1.2"/>
+    <param name="scale_linear" value="0.6"/>
+    <param name="buttons_deadman" value="5"/>
+    <param name="axis_linear" value="1"/>
+    <param name="axis_angular" value="0"/>
+    <param name="buttons_stop" value="0"/>
+    <param name="buttons_rotation_R" value="5"/>
+    <param name="buttons_rotation_L" value="2"/>
+    <param name="buttons_straught" value="2"/>
+  </node>
+
+  <node pkg="joy" type="joy_node" name="joystick"/>
+
+ 
+</launch>

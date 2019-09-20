@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<!-- 2017年11月01日　秋本 -->
+<!-- つくばチャレンジ本番で使用するlaunch -->
+<launch>
+
+
+  <!-- rosbag play -->
+  <node pkg="rosbag" type="play" name="test_play" args="/home/robo/bagfile/Nacanoshima/try_test_honban2.bag" />
+
+  <!-- rosbag -->
+  <node pkg="rosbag" type="record" name="test_record" args="--lz4 -O /home/robo/bagfile/experiment_bag.bag /move_base/TebLocalPlannerROS/local_plan" output="screen"/>
+
+
+  <!-- rviz -->
+  <node pkg="rviz" type="rviz" name="rviz" args="-d /home/robo/catkin_ws/src/2018_tsukuba_challenge/rviz/move_base_2018.rviz"/>
+
+</launch>

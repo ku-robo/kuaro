@@ -1,0 +1,11 @@
+Node: /move_base
+Time: 19:56:03.251975747 (2017-10-19)
+Severity: Warn
+Published Topics: /cmd_vel, /move_base/TebLocalPlannerROS/global_plan, /move_base/TebLocalPlannerROS/local_plan, /move_base/TebLocalPlannerROS/parameter_descriptions, /move_base/TebLocalPlannerROS/parameter_updates, /move_base/TebLocalPlannerROS/teb_feedback, /move_base/TebLocalPlannerROS/teb_markers, /move_base/TebLocalPlannerROS/teb_poses, /move_base/current_goal, /move_base/feedback, /move_base/global_costmap/costmap, /move_base/global_costmap/costmap_updates, /move_base/global_costmap/footprint, /move_base/global_costmap/inflation_layer/parameter_descriptions, /move_base/global_costmap/inflation_layer/parameter_updates, /move_base/global_costmap/obstacle_layer/parameter_descriptions, /move_base/global_costmap/obstacle_layer/parameter_updates, /move_base/global_costmap/parameter_descriptions, /move_base/global_costmap/parameter_updates, /move_base/global_costmap/static_layer/parameter_descriptions, /move_base/global_costmap/static_layer/parameter_updates, /move_base/goal, /move_base/local_costmap/costmap, /move_base/local_costmap/costmap_updates, /move_base/local_costmap/footprint, /move_base/local_costmap/inflation_layer/parameter_descriptions, /move_base/local_costmap/inflation_layer/parameter_updates, /move_base/local_costmap/obstacle_layer/parameter_descriptions, /move_base/local_costmap/obstacle_layer/parameter_updates, /move_base/local_costmap/parameter_descriptions, /move_base/local_costmap/parameter_updates, /move_base/local_costmap/static_layer/parameter_descriptions, /move_base/local_costmap/static_layer/parameter_updates, /move_base/parameter_descriptions, /move_base/parameter_updates, /move_base/result, /move_base/status, /rosout
+
+Clearing costmap to unstuck robot (3.000000m).
+
+Location:
+/home/robo/catkin_ws/src/navigation-indigo-devel/clear_costmap_recovery/src/clear_costmap_recovery.cpp:ClearCostmapRecovery::runBehavior:90
+
+----------------------------------------------------------------------------------------------------

@@ -1,0 +1,161 @@
+cmake_minimum_required(VERSION 2.8.3)
+project(2018_tsukuba_challenge)
+
+
+## Compile as C++11, supported in ROS Kinetic and newer
+# check c++11 / c++0x
+include(CheckCXXCompilerFlag)
+CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
+CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
+if(COMPILER_SUPPORTS_CXX11)
+    set(CMAKE_CXX_FLAGS "-std=c++11")
+elseif(COMPILER_SUPPORTS_CXX0X)
+    set(CMAKE_CXX_FLAGS "-std=c++0x")
+else()
+    message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
+endif()
+
+
+## Find catkin macros and libraries
+find_package(catkin REQUIRED COMPONENTS
+  roscpp
+  rospy
+  std_msgs
+  nav_msgs
+  cv_bridge 
+  tf
+  laser_geometry
+  pcl_conversions
+  pcl_ros
+)
+
+
+## System dependencies are found with CMake's conventions
+find_package(OpenCV REQUIRED)
+find_package(PCL 1.7 REQUIRED)
+find_package(Boost REQUIRED COMPONENTS system timer thread)
+
+
+################################################
+## Declare ROS messages, services and actions ##
+################################################
+
+################################################
+## Declare ROS dynamic reconfigure parameters ##
+################################################
+
+
+###################################
+## catkin specific configuration ##
+###################################
+
+catkin_package(
+  CATKIN_DEPENDS message_runtime
+)
+
+
+
+###########
+## Build ##
+###########
+
+
+## Specify additional locations of header files
+include_directories(
+  ${catkin_INCLUDE_DIRS}
+  ${OpenCV_INCLUDE_DIRS}
+  ${PCL_INCLUDE_DIRS}
+  ${Boost_INCLUDE_DIRS}
+)
+
+################################################
+## velodyne_detection_2018 ##
+
+add_executable(velodyne_detection_2018
+  src/velodyne_detection_2018/main.cpp
+  src/velodyne_detection_2018/stdafx.hpp
+  src/velodyne_detection_2018/velodyne_detection.cpp
+  src/velodyne_detection_2018/velodyne_detection.hpp
+)
+
+target_link_libraries(velodyne_detection_2018
+	${catkin_LIBRARIES}
+        ${OpenCV_LIBRARIES}
+	${PCL_LIBRARIES}
+)
+
+################################################
+## person_manager_2018 ##
+
+add_executable(person_manager_2018
+  src/person_manager_2018/main.cpp
+  src/person_manager_2018/person_manager.cpp
+  src/person_manager_2018/person_manager.hpp
+  src/person_manager_2018/stdafx.hpp
+)
+
+target_link_libraries(person_manager_2018
+	${catkin_LIBRARIES}
+)
+
+################################################
+## waypoint_publisher_2018 ##
+
+add_executable(waypoint_publisher_2018
+  src/waypoint_publisher_2018/main.cpp
+  src/waypoint_publisher_2018/stdafx.hpp
+)
+
+target_link_libraries(waypoint_publisher_2018
+	${catkin_LIBRARIES}
+)
+
+################################################
+## person_manager_sim_2018 ##
+
+add_executable(person_manager_sim_2018
+  src/person_manager_sim_2018/main.cpp
+  src/person_manager_sim_2018/person_manager.cpp
+  src/person_manager_sim_2018/person_manager.hpp
+  src/person_manager_sim_2018/stdafx.hpp
+)
+
+target_link_libraries(person_manager_sim_2018
+	${catkin_LIBRARIES}
+)
+
+################################################
+## uway_pointmaker_2018 ##
+
+add_executable(uway_pointmaker_2018
+  src/uway_pointmaker_2018/uway_main.cpp
+)
+
+target_link_libraries(uway_pointmaker_2018
+	${catkin_LIBRARIES}
+)
+
+################################################
+## waypoint_maker_auto_2018 ##
+
+add_executable(waypoint_maker_auto_2018
+  src/waypoint_maker_auto_2018/main.cpp
+  src/waypoint_maker_auto_2018/stdafx.hpp
+)
+
+target_link_libraries(waypoint_maker_auto_2018
+	${catkin_LIBRARIES}
+)
+################################################
+
+
+#############
+## Install ##
+#############
+
+
+#############
+## Testing ##
+#############
+
+

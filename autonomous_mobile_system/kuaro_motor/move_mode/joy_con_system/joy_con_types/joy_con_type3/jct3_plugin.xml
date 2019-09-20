@@ -1,0 +1,7 @@
+<library path="lib/libjoy_con_type3">
+  <class name="joy_con_type3/JoyCon" type="joy_con_type3::JoyCon" base_class_type="joy_con_core::JoyConCore">
+    <description>
+      This plugin has functions depending on the defined control type 'type3'.
+    </description>
+  </class>
+</library>

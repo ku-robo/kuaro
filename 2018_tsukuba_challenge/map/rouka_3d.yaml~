@@ -1,0 +1,7 @@
+image: /home/robo/catkin_ws/src/2017_tsukuba_challenge/map/rouka_3d.pgm
+resolution: 0.200000
+origin: [-27.800001, -16.399999, 0.0]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.196
+

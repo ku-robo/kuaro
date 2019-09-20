@@ -1,0 +1,23 @@
+scan_topic: /scan
+kuaro_linear: 0.7
+kuaro_angular: 0.6
+kuaro_back_range: 0.5
+default_m_obs: 0.5
+m_obs_front: 0.3
+m_obs_back: 0.1
+
+Client_name: move_base
+read_file: /home/robo/catkin_ws/src/2018_tsukuba_challenge/test.csv
+distance: 2.0
+time_limit: 5.0
+back_vel: -0.1
+start_point: 0
+map_flag: -1
+danger_scan_count: 50
+danger_range_x: 0.3
+danger_range_y: 0.4
+
+Danger_range: 1.0
+Thre_deg: 50.0
+Sign_min: 0.0
+Sign_max: 1.0

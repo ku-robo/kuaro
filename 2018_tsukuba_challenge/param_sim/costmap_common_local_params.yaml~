@@ -1,0 +1,18 @@
+footprint: [[0.25, 0.35],[0.25, -0.35],[-0.60, -0.35],[-0.60, 0.35]]
+
+# 障害物の最大高さ (ロボットアームを装着した場合を考慮すること)
+max_obstacle_height: 0.30
+# センサの値のうち、この距離値より近いとき、障害物として処理する。以下メートル単位
+obstacle_range: 3.0 #2.0
+
+# センサの値のうち、この距離値以上のデータは無視される。
+raytrace_range: 4.0 #3.0
+
+# インフレーション領域 (ロボットの近傍領域)を表す円の半径で、障害物へ接近させないようにするパラメータ #0.30
+inflation_radius: 0.1 #0.8
+cost_scaling_factor: 10.0 #10.0
+
+observation_sources: laser_scan_sensor point_scan_sensor
+laser_scan_sensor: {data_type: LaserScan, topic: scan, marking: true, clearing: true}
+#point_scan_sensor: {data_type: PointCloud2, topic: step_cloud, marking: true, clearing: true, #min_obstacle_height: -0.20, max_obstacle_height: 0.30}
+

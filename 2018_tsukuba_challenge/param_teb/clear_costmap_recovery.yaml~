@@ -1,0 +1,2 @@
+ClearCostmapRecovery
+   reset_distance (double, default: 3.0)

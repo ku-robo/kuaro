@@ -1,0 +1,20 @@
+JoyCon:
+  MaxLinearSpeed: 1.1
+  MaxAngularSpeed: 0.8
+  SafetyRatio: 1.2
+  BoostRatio: 1.5
+  TimeConstant: 1.0
+  Accelerator: R2
+  Brake: L2
+  Turn-Y: LS-Y
+  Turn-X: LS-X
+  CS-Y: CK-Y
+  CS-X: CS-X
+  Straight: Round-T
+  Turn-R: Round-MR
+  Turn-L: Round-ML
+  Back: Round-B
+  Boost: RSP
+  Exp: HOME
+  ON: START
+  OFF: BACK

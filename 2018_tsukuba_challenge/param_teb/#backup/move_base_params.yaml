@@ -1,0 +1,36 @@
+# Move base node parameters. For full documentation of the parameters in this file, please see
+#
+#  http://www.ros.org/wiki/move_base
+#
+
+# move_baseが無効な場合costmapノードを停止させるかの選択 : default false
+shutdown_costmaps: true
+
+# ロボットベースに速度コマンドを与えるコントロール繰り返しの周期 (Hz単位)
+controller_frequency: 10.0 #3.0 #10.0
+
+# space-clearing動作が実行される前に、コントローラが制御情報を受信待機する最大時間
+controller_patience: 3.0
+
+# space-clearing動作前に、使用可能な計画を見つけるために待機する最大時間
+planner_patience: 5.0 #5.0
+
+# 全域計画の繰り返し周期 (Hz単位)
+planner_frequency: 0.1 #0.0
+
+# 回復行動 (軌道計画に失敗した時の行動)を実行する前に、ロボットが行ったり来たりすることを可能にする時間
+oscillation_timeout: 10.0
+
+# この距離を移動した場合、oscillation_timeoutは初期化される。
+oscillation_distance: 0.5
+
+base_global_planner: carrot_planner/CarrotPlanner #global_planner/GlobalPlanner
+base_local_planner: teb_local_planner/TebLocalPlannerROS
+
+conservative_reset_dist: 2.0
+recovery_behavior_enabled: true
+clearing_rotation_allowed: true
+
+# 2017_10_19_akimoto
+#recovery_behaviors: [{name: conservative_reset, type: clear_costmap_recovery/ClearCostmapRecovery}, {name: rotate_recovery, type: move_slow_and_clear/MoveSlowAndClear}, {name: aggressive_reset, type: recovery_mode/RecoveryMode}]
+recovery_behaviors: [{name: conservative_reset, type: clear_costmap_recovery/ClearCostmapRecovery}]

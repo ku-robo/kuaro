@@ -1,0 +1,7 @@
+<library path="lib/librecovery_plugin_tester">
+  <class name="wang_project/RecoveryPluginTester" type="wang_project::RecoveryPluginTester" base_class_type="nav_core::RecoveryBehavior">
+    <description>
+      test desu
+    </description>
+  </class>
+</library>

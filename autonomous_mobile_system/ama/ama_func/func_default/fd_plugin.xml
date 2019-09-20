@@ -1,0 +1,7 @@
+<library path="lib/libfunc_default">
+  <class name="func_default/FuncDefault" type="func_default::FuncDefault" base_class_type="ama_core::AMAFunc">
+    <description>
+      This plugin 
+    </description>
+  </class>
+</library>

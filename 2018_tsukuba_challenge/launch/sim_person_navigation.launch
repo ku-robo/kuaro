@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <arg name="file_name" default="/home/robo/つくば練習中/way_point/waypoints_out.txt"/>
+<!-- /home/robo/catkin_ws/src/2018_tsukuba_challenge/waypoint/2017_08_31_camera_all_1.bag_suc1_out.txt -->
+
+  <!-- navigation to person -->
+  <node pkg="2018_tsukuba_challenge" type="person_manager_sim_2018" name="person_manager_sim_2018" output="screen">
+    <param name="read_file" value="$(arg file_name)"/>
+    <param name="distance" value="1.5"/>
+    <param name="time_limit" value="5.0"/>
+    <param name="back_vel" value="-0.1"/>
+    <param name="start_point" value="0"/>
+    <!-- 0なら3Dの地図，1なら2Dの地図 -->
+    <param name="map_flag" value="1"/>
+    <remap from="/cmd_vel" to="mobile_base/commands/velocity"/>
+  </node>
+
+
+  <!-- waypoint_publisher -->
+  <node pkg="2018_tsukuba_challenge" type="waypoint_publisher_2018" name="waypoint_publisher_2018">
+    <param name="read_file" value="$(arg file_name)"/>
+  </node>
+
+  <node pkg="tf" type="static_transform_publisher" name="poly" args="0 0 0 0 0 0 /my_frame /map 100"/>
+
+</launch>

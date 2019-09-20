@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <arg name="file_name" default="/home/robo/bagfile/sadahira_2/way_points_output.txt"/>
+
+  <!-- person detection -->
+  <node pkg="2018_tsukuba_challenge" type="velodyne_detection_2018" name="velodyne_detection_2018">
+    <param name="velodyne_height" value="1.1" />
+    <param name="TmpWidth" type="int" value="640" />
+    <param name="TmpHeight" type="int" value="480" />
+    <param name="voxel_size" value="0.01" />
+    <param name="seg_point_min" value="10.0" />
+    <param name="seg_point_max" value="1000.0" />
+    <param name="seg_distance" value="0.05" />
+  </node>
+
+
+  <!-- navigation to person -->
+  <node pkg="2018_tsukuba_challenge" type="underD_person_manager_2018_byF" name="underD_person_manager_2018_byF" output="screen">
+    <rosparam file="$(find 2018_tsukuba_challenge)/param_f/default_param.yaml" command="load"/>
+
+  </node>
+
+
+  <node pkg="2018_tsukuba_challenge" type="waypoint_publisher_2018" name="waypoint_publisher_2018">
+    <param name="read_file" value="$(arg file_name)"/>
+  </node>
+
+
+  <node pkg="tf" type="static_transform_publisher" name="poly" args="0 0 0 0 0 0 /my_frame /map 100"/>
+
+</launch>

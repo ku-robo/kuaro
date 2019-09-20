@@ -1,0 +1,10 @@
+sub_serial_topic: /serial_receive
+pub_serial_topic: /serial_send
+loop_rate: 10
+
+move_safety_system: move_safety_system/ProtoType1
+
+#move_modes: [{name: stop_and_go, type: stop_and_go/ModeStopAndGo}, {name: joy_con, type: joy_con/ModeJoyCon}, {name: move_vel, type: move_vel/ModeMoveVel}, {name: wireless, type: wireless/ModeWireLess}, ]
+
+move_modes: [{name: stop_and_go, type: stop_and_go/ModeStopAndGo}, {name: joy_con, type: joy_con/ModeJoyCon} ]
+

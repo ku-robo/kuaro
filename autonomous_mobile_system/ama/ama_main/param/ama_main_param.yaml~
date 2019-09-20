@@ -1,0 +1,8 @@
+nextfunc_map_file_name: /home/robo/ama_test/nextfunc_map_filet.txt
+distance_between_target_positions: 3.5f
+target_change_distance: 0.8f
+waypoint_angle_threshold: 12.5f
+wp_goal_judg_threshold_ratio: 0.75f
+ama_funcs: [{name: default, type: func_default/FuncDefault} ]
+ama_moves: [{name: default, type: move_default/MoveDefault} ]
+

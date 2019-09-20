@@ -1,0 +1,62 @@
+DWAPlannerROS:
+
+# Robot Configuration Parameters
+
+  # 速度
+  max_vel_x:  0.6 #x軸の最大速度 (meter/sec) #0.5
+  min_vel_x:  0.1 #x軸の最小速度 (meter/sec)
+  trans_stopped_vel: 0.1 #停止並進速度 (meter/sec)
+
+  max_vel_y: 0.0 #全方向ロボットの場合に設定
+  min_vel_y: 0.0 #全方向ロボットの場合に設定
+
+  max_trans_vel: 0.7 #最大並進速度 (meter/sec)
+  min_trans_vel: 0.1 #最小並進速度 (meter/sec)
+
+
+  # 角速度
+  max_rot_vel: 1.0 #最大回転速度 (radian/sec) #0.4
+  min_rot_vel: 0.1 #最小回転速度 (radian/sec)
+
+
+  # 加速度
+  acc_lim_x: 10.0 #x軸加速度制限 (meter/secˆ2) # 2.0
+  acc_lim_y: 0.0 #y軸加速度制限 (meter/secˆ2)
+  acc_lim_th: 0.5 # 0.3
+
+
+  #目標地点の許容誤差
+  latch_xy_goal_tolerance: false
+  yaw_goal_tolerance: 3.14 #yaw軸の角度許容誤差 (radian) # 1.57
+  xy_goal_tolerance: 0.50 #x、y座標の距離許容誤差 (meter)
+
+
+  #フォワードシミュレーション (Forward Simulation)パラメータ
+  sim_time: 3.0 #フォワードシミュレーション軌跡時間 #3.0
+  vx_samples: 6 #x軸速度空間で探索するサンプル数 #6
+  vy_samples: 1 #y軸速度空間で探索するサンプル数
+  vtheta_samples: 31 #yaw軸速度空間で探索するサンプル数 #20
+
+  
+  #軌跡スクロールパラメータ (軌跡評価)
+  goal_distance_bias: 0.6 #24.0, 0.6 #目標地点と制御速度に近いかどうかの重み
+  path_distance_bias: 0.8 #32.0, 0.8 #コントローラのパス追従の重み
+  occdist_scale: 1.0 #障害物回避のための重み # 0.04 1.0
+  forward_point_distance: 0.7 #ロボットから追加スクロール点との距離 (meter) #0.325 0.7
+  stop_time_buffer: 0.5 #ロボット停止に必要な時間 (sec) #0.2
+  scaling_speed: 0.25 #スケーリング速度 (meter/sec) # 0.25
+  max_scaling_factor: 0.2 #最大スケーリング係数
+
+
+  #不安定な挙動 (Oscillation)を防ぐためのパラメータ
+  oscillation_reset_dist: 0.05 #oscillationフラグがリセットされる前に、ロボットがどのように移動するかの設定
+
+
+  #Differential-drive robot configuration
+  holonomic_robot: false
+
+  # recovery 
+  #max_rotational_vel: 0.5
+  
+  # バックする速度
+  #escape_vel: -0.1

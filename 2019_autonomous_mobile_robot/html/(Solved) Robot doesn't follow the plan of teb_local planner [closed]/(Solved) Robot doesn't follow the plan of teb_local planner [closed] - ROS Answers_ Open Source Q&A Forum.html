@@ -1,0 +1,810 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0097)https://answers.ros.org/question/256948/solved-robot-doesnt-follow-the-plan-of-teb_local-planner/ -->
+<html xmlns="http://www.w3.org/1999/xhtml" class="js history"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script src="./(Solved) Robot doesn&#39;t follow the plan of teb_local planner [closed] - ROS Answers_ Open Source Q&amp;A Forum_files/cb=gapi.loaded_1" async=""></script><script src="./(Solved) Robot doesn&#39;t follow the plan of teb_local planner [closed] - ROS Answers_ Open Source Q&amp;A Forum_files/cb=gapi.loaded_0" async=""></script> <title>(Solved) Robot doesn't follow the plan of teb_local planner [closed] - ROS Answers: Open Source Q&amp;A Forum</title> <meta name="description" content="Hi all! I had solved my problem. Just change &quot;enable_homotopy_class_planning&quot; to False and &quot;acc_lim_theta&quot; to 0.15. Maybe this will help someone. Sorry for my bad English. Hi all! My robot run with teb_local planner. You can see in the video ( https://www.youtube.com/watch?v=IQAa8... ). It keep shaking and can&#39;t follow the plan. How can i fix it. Here are my config: TebLocalPlannerROS: odom_topic: /odom map_frame: /map teb_autosize: True dt_ref: 0.3 dt_hysteresis: 0.1 #0.1 global_plan_overwrite_orientation: True global_plan_viapoint_sep: 0.5 max_global_plan_lookahead_dist: 5.0 feasibility_check_no_poses: 5 cmd_angle_instead_rotvel: False max_vel_x: 0.2 max_vel_x_backwards: 0.2 max_vel_theta: 0.5 acc_lim_x: 0.2 acc_lim_theta: 0.2 min_turning_radius: 2.0 footprint_model: # types: &quot;point&quot;, &quot;circular&quot;, &quot;two_circles&quot;, &quot;line&quot;, &quot;polygon&quot; type: &quot;line&quot; line_start: [0.0, 0.0] line_end: [1.772, 0.0] xy_goal_tolerance: 0.5 yaw_goal_tolerance: 0.3 free_goal_vel: False min_obstacle_dist: 0.5 include_costmap_obstacles: True costmap_obstacles_behind_robot_dist: 1 #1 obstacle_poses_affected: 30 #30 costmap_converter_plugin: &quot;&quot; costmap_converter_spin_thread: True costmap_converter_rate: 5 no_inner_iterations: 5 no_outer_iterations: 4 optimization_activate: True optimization_verbose: False penalty_epsilon: 0.1 weight_max_vel_x: 2 weight_max_vel_theta: 1 weight_acc_lim_x: 0.0 weight_acc_lim_theta: 0.0 #0.0 weight_kinematics_nh: 1000 weight_kinematics_forward_drive: 1 weight_kinematics_turning_radius: 1 #1 weight_optimaltime: 1 weight_obstacle: 50 #100 weight_dynamic_obstacle: 10 # not in use yet enable_homotopy_class_planning: True enable_multithreading: True simple_exploration: False max_number_classes: 4 selection_cost_hysteresis: 1.0 selection_obst_cost_scale: 1.0 selection_alternative_time_cost: False roadmap_graph_no_samples: 15 roadmap_graph_area_width: 5 h_signature_prescaler: 0.5 h_signature_threshold: 0.1 obstacle_keypoint_offset: 0.1 obstacle_heading_threshold: 0.45 visualize_hc_graph: False move_base: shutdown_costmaps: false controller_frequency: 10.0 controller_patience: 15.0 planner_frequency: 3.0 planner_patience: 5.0 oscillation_timeout: 2.0 oscillation_distance: 0.2 conservative_reset_dist: 3.0 recovery_behavior_enabled: true clearing_rotation_allowed: true cost_map: footprint: [[2.3,0.5], [2.3, -0.5],[-0.2, -0.5], [-0.2,0.5]] # non-circular robot transform_tolerance: 0.2 map_type: costmap obstacle_layer: enabled: true obstacle_range: 2.5 raytrace_range: 3.0 inflation_radius: 1.5 track_unknown_space: true combination_method: 1 observation_sources: scan scan: {sensor_frame: laser, data_type: LaserScan, topic: scan, marking: true, clearing: true} inflation_layer: enabled: true cost_scaling_factor: 10.0 inflation_radius: 0.5 static_layer: enabled: true map_topic: &quot;/map&quot; global_cost map global_costmap: global_frame: /map robot_base_frame: /base_link update_frequency: 5.0 publish_frequency: 2.0 static_map: true rolloing_window: false transform_tolerance: 0.5 plugins: - {name: static_layer, type: &quot;costmap_2d::StaticLayer&quot;} - {name: obstacle_layer, type: &quot;costmap_2d::VoxelLayer&quot;} - {name: inflation_layer, type: &quot;costmap_2d::InflationLayer&quot;} local_cost map local_costmap: global_frame: /odom #/map robot_base_frame: /base_link update_frequency: 5.0 publish_frequency: 2.0 static_map: false rolling_window: true width: 10.0 height: 8.0 resolution: 0.1 transform_tolerance: 0.5 #1 #0.5 plugins: - {name: static_layer, type: &quot;costmap_2d::StaticLayer&quot;} - {name: obstacle_layer, type: &quot;costmap_2d::ObstacleLayer&quot;} Many thanks!">  <meta http-equiv="X-UA-Compatible" content="IE=EDGE"> <meta name="keywords" content=",ROS,forum,community"> <meta name="google-site-verification" content="CjkdY6BqKWAVmQ78_iSq6J7ZZ9AoL7-CjFVBYGg9FU4"> <meta name="referrer" content="always"> <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"> <link rel="shortcut icon" href="https://answers.ros.org/m/ros/media/images/ros_favicon.gif?v=27"> <link rel="alternate" type="application/rss+xml" href="http://answers.ros.org/feeds/rss/"> <link rel="stylesheet" href="./(Solved) Robot doesn&#39;t follow the plan of teb_local planner [closed] - ROS Answers_ Open Source Q&amp;A Forum_files/ed0aed859c34.css" type="text/css"> <link href="./(Solved) Robot doesn&#39;t follow the plan of teb_local planner [closed] - ROS Answers_ Open Source Q&amp;A Forum_files/css" rel="stylesheet" type="text/css"> <link href="./(Solved) Robot doesn&#39;t follow the plan of teb_local planner [closed] - ROS Answers_ Open Source Q&amp;A Forum_files/css(1)" rel="stylesheet" type="text/css"> <link rel="canonical" href="http://answers.ros.org/question/256948/solved-robot-doesnt-follow-the-plan-of-teb_local-planner/"> <link rel="stylesheet" type="text/css" href="./(Solved) Robot doesn&#39;t follow the plan of teb_local planner [closed] - ROS Answers_ Open Source Q&amp;A Forum_files/wmd.css"> <script type="text/javascript" src="./(Solved) Robot doesn&#39;t follow the plan of teb_local planner [closed] - ROS Answers_ Open Source Q&amp;A Forum_files/modernizr.custom.js"></script> <script type="text/javascript">
+    var askbot = {};
+    askbot['data'] = {};
+    askbot['data']['userIsAuthenticated'] = false;
+    askbot['data']['languageCode'] = 'en';
+    
+        askbot['data']['userReputation'] = 0;
+        askbot['data']['userEmail'] = null;
+        askbot['data']['userIsReadOnly'] = false;//in principle we allow anon users to start posting
+    
+    askbot['urls'] = {};
+    askbot['settings'] = {};
+    askbot['messages'] = {};
+    
+</script> <script type="text/javascript" src="./(Solved) Robot doesn&#39;t follow the plan of teb_local planner [closed] - ROS Answers_ Open Source Q&amp;A Forum_files/saved_resource"></script> <script type="text/javascript">
+        /*<![CDATA[*/
+        //below is pure cross-browser javascript, no jQuery
+        askbot['data']['userIsThreadModerator'] = false;
+        askbot['data']['oldestAnswerId'] = -1;
+        askbot['data']['threadIsClosed'] = true;
+        
+        (function(){
+
+            var hasClass = function(node, selector) {
+                var classes = (" " + node.className + " ").split(' ');
+                for (var i = 0; i < classes.length; i++) {
+                    if (classes[i] === selector) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            var findClosestParentByClassName = function(node, className) {
+                if (hasClass(node, className)) {
+                    return node;
+                }
+                if (node.nodeName === 'BODY') {
+                    return false;
+                } else {
+                    return findClosestParentByClassName(node.parentNode, className);
+                }
+            };
+
+            var findChildrenByClassName = function(node, className) {
+                var nodes = [];
+                var walk = function(node) {
+                    if (hasClass(node, className)) {
+                        nodes.push(node);
+                    }
+                    if (node.childNodes) {
+                        for (var i=0; i < node.childNodes.length; i++) {
+                            walk(node.childNodes[i]);
+                        }
+                    }
+                };
+                walk(node);
+                return nodes;
+            };
+
+            var getTextContent = function(node) {
+                var text = node.innerText || node.textContent;
+                if (text === undefined) {
+                    return '';
+                } else {
+                    return text;
+                }
+            };
+
+            var hasAttribute = function(node, attrName) {
+                if (node.hasAttribute) {
+                    return node.hasAttribute(attrName);
+                } else {
+                    return (!(!(node.getAttribute(attrName))));
+                }
+            };
+
+            var findChildByAttribute = function(node, attrName, attrVal) {
+                var children = node.childNodes;
+                for (var i = 0; i < children.length; i++) {
+                    var child = children[i];
+                    if (child.getAttribute(attrName) === attrVal) {
+                        return child;
+                    }
+                };
+                return null;
+            };
+
+            var postIsComment = function(postId) {
+                if (document.getElementById('comment-' + postId)) {
+                    return true;
+                }
+                return false;
+            };
+
+            var getPost = function(postId) {
+                return document.getElementById('post-id-' + postId);
+            }
+
+            var postIsQuestion = function(postId) {
+                var content = getPost(postId);
+                if (content) {
+                    if (hasClass(content, 'js-comment')) {
+                        return false;
+                    }
+                    if (findClosestParentByClassName(content, 'js-question')) {
+                        return true;
+                    }
+                }
+                return false;
+            };
+
+            var removeNode = function(node) {
+                node.parentNode.removeChild(node);
+            };
+
+            var trim = function(text) {
+                return text.replace(/^\s+|\s+$/g, '');
+            };
+
+            var data = askbot['data'];
+            var isAuthorOfPost = function(post_id) {
+                return (data['user_posts'] && data['user_posts'][post_id]);
+            };
+
+            if (data['userIsAuthenticated']){
+                var votes = {};
+                
+                data['user_votes'] = votes;
+                var posts = {};
+                
+                data['user_posts'] = posts;
+            }
+
+            function render_vote_buttons(post_type, post_id){
+                var upvote_btn = document.getElementById(
+                    post_type + '-img-upvote-' + post_id
+                );
+                var downvote_btn = document.getElementById(
+                    post_type + '-img-downvote-' + post_id
+                );
+                if (data['userIsAuthenticated']){
+                    if (post_id in data['user_votes']){
+                        var vote = data['user_votes'][post_id];
+                        if (vote == -1){
+                            var btn = downvote_btn;
+                        } else if (vote == 1){
+                            var btn = upvote_btn;
+                        } else {
+                            return;
+                        }
+                        if (post_type == 'comment'){
+                            btn.className = btn.className + ' upvoted';
+                        } else {
+                            btn.className = btn.className + ' on';
+                        }
+                    }
+                }
+            }
+
+            function hide_convert_answer_links(post_id){
+                var id1 = 'post-' + post_id + '-convert';//for repost as Q comment
+                var repostAsQuestionComment = document.getElementById(id1);
+                var id2 = 'post-' + post_id + '-repost-as-comment-under-previous-answer';
+                var repostAsPrevAnsComment = document.getElementById(id2);
+                var extraOptsList = repostAsQuestionComment.parentNode;
+                var extraOpts = extraOptsList.parentNode;
+
+                var isAuthenticated = data['userIsAuthenticated'];
+                var isMod = data['userIsAdminOrMod'];
+                if (isAuthenticated && (isMod || isAuthorOfPost(post_id))) {
+                    //still may need to hide because answer may be too long
+                    var answer_container = getPost(post_id);
+                    var answerBody = findChildrenByClassName(answer_container, 'post-body')[0];
+                    //todo: this is not reliable
+                    var answerBodyNodes = answerBody.childNodes;
+                    var answerElement = answerBodyNodes[answerBodyNodes.length - 1];
+                    if (trim(getTextContent(answerElement)).length > askbot['data']['maxCommentLength']) {
+                        repostAsQuestionComment.parentNode.removeChild(repostAsQuestionComment);
+                        repostAsPrevAnsComment.parentNode.removeChild(repostAsPrevAnsComment);
+                    } else if (parseInt(post_id) === data['oldestAnswerId']) {
+                        repostAsPrevAnsComment.parentNode.removeChild(repostAsPrevAnsComment);
+                    }
+                } else {
+                    repostAsQuestionComment.parentNode.removeChild(repostAsQuestionComment);
+                    repostAsPrevAnsComment.parentNode.removeChild(repostAsPrevAnsComment);
+                }
+
+                //if the whole control is empty - remove it
+                if (extraOptsList.getElementsByTagName('li').length === 0) {
+                    extraOpts.parentNode.removeChild(extraOpts);
+                }
+            }
+
+            function hidePublishAnswerLink(postId) {
+                if (data['userIsThreadModerator'] === false) {
+                    //hide publish/unpublish answer links
+                    var answerId = 'post-' + postId + '-publish';
+                    var pubBtn = document.getElementById(answerId);
+                    if (pubBtn) {
+                        removeNode(pubBtn);
+                    }
+                }
+            }
+
+            function remove_all_controls(post_id) {
+                var deleteBtn = document.getElementById('post-' + post_id + '-delete');
+                var controls = deleteBtn.parentNode;
+                if (controls.className == 'comment-content') {
+                    removeNode(deleteBtn);
+                    var convertLinks = findChildrenByClassName(controls, 'convert-comment');
+                    if (convertLinks.length) {
+                        removeNode(convertLinks[0]);
+                    }
+                    var editLinks = findChildrenByClassName(controls, 'edit');
+                    if (editLinks.length) {
+                        removeNode(editLinks[0]);
+                    }
+                } else {
+                    var buttons = controls.childNodes;
+                    var numButtons = buttons.length;
+                    for (var i = numButtons - 1; i >= 0; i--) {
+                        removeNode(buttons[i]);
+                    }
+                }
+            };
+
+            function render_post_controls(post_id, is_wiki){
+
+                //in this case remove all post controls
+                if (askbot['settings']['readOnlyModeEnabled'] === true) {
+                    remove_all_controls(post_id);
+                    return;
+                }
+
+                var deleteBtn = document.getElementById('post-' + post_id + '-delete');
+                var controls = deleteBtn.parentNode;
+                var mergeBtn = findChildrenByClassName(controls, 'question-merge');
+                if (mergeBtn.length === 1 && data['userIsThreadModerator'] === false) {
+                    removeNode(mergeBtn[0]);
+                }
+
+                if (data['userIsAdminOrMod']) {
+                    return;//all remaining functions stay on
+                }
+
+                
+
+                if (isAuthorOfPost(post_id)) {
+                    if (postIsQuestion(post_id) && 0) {
+                        if (data['userReputation'] < 1) {
+                            if (!data['userIsAdminOrMod']) {
+                                removeNode(deleteBtn);
+                            }
+                        }
+                    }
+                    //todo: remove edit button from older comments
+                    return;
+                }
+
+                if (//maybe remove "delete" button
+                    (data['userReputation'] <
+                    200) || data['userIsReadOnly']
+                ) {
+                    removeNode(deleteBtn);
+                }
+
+                var canFlagPosts = data['userReputation'] >= 5;
+                var flags = findChildrenByClassName(controls, 'question-flag');
+                if (flags.length > 0 && !canFlagPosts) {
+                    for (var i = 0; i < flags.length; i++) {
+                        removeNode(flags[i]);
+                    }
+                }
+                var closeBtn = findChildrenByClassName(controls, 'question-close');
+                if (
+                    closeBtn.length === 1 &&
+                    (
+                        (data['userReputation'] < 200) ||
+                        data['userIsReadOnly']
+                    )
+                ) {
+                    removeNode(closeBtn[0]);
+                }
+                var enoughRep = (data['userReputation'] >= 500 ||
+                        (is_wiki && data['userReputation'] >= 75));
+                if (//maybe remove "edit" button
+                    !enoughRep || data['userIsReadOnly']//only authors edit comments
+                ){
+                    var editBtns = findChildrenByClassName(getPost(post_id), 'js-edit');
+                    var numBtns = editBtns.length;
+                    for (var i=0; i<numBtns; i++) {
+                        removeNode(editBtns[i]);
+                    }
+                }
+                if (//maybe remove retag button
+                    (!isAuthorOfPost(post_id)) &&
+                    postIsQuestion(post_id) &&
+                    ((data['userReputation'] <
+                    100) ||
+                    data['userIsReadOnly'])
+                ){
+                    var retagBtn = document.getElementById('retag');
+                    if (retagBtn) {
+                        removeNode(retagBtn);
+                    }
+                }
+            }
+
+            function render_add_answer_button(){
+                var add_answer_btn = document.getElementById('add-answer-btn');
+                if (askbot['data']['userIsAuthenticated']){
+                    if (askbot['data']['userId'] == 28380){
+                        add_answer_btn.className += ' answer-own-question';
+                        add_answer_btn.setAttribute(
+                            'value',
+                            'Answer Your Own Question'
+                        )
+                    } else {
+                        add_answer_btn.setAttribute(
+                           'value',
+                           'Post Your Answer'
+                        )
+                    }
+                } else {
+                    add_answer_btn.setAttribute(
+                        'value',
+                        'Login/Signup to Post'
+                    );
+                }
+            }
+
+            function hide_convert_links() {
+                var isAuthenticated = data['userIsAuthenticated'];
+                var isMod = data['userIsAdminOrMod'];
+                if (isAuthenticated && isMod) {
+                    return;
+                }
+                var convertForms = findChildrenByClassName(document, 'convert-comment');
+                for (var i = 0; i < convertForms.length; i++) {
+                    //get comment id
+                    var form = convertForms[i];
+                    var idInput = findChildByAttribute(form, 'name', 'comment_id');
+                    var commentId = idInput.getAttribute('value');
+                    if (! isAuthorOfPost(commentId) ) {
+                        form.setAttribute('style', 'display:none;');
+                    }
+                }
+            }
+
+            askbot['functions'] = askbot['functions'] || {};
+            askbot['functions']['renderPostVoteButtons'] = render_vote_buttons;
+            askbot['functions']['renderPostControls'] = render_post_controls;
+            askbot['functions']['renderAddAnswerButton'] = render_add_answer_button;
+            askbot['functions']['hideConvertLinks'] = hide_convert_links;
+            askbot['functions']['hideConvertAnswerLinks'] = hide_convert_answer_links;
+            askbot['functions']['hidePublishAnswerLink'] = hidePublishAnswerLink;
+        })();
+        /*]]>*/
+    </script> <link type="text/css" rel="stylesheet" charset="UTF-8" href="./(Solved) Robot doesn&#39;t follow the plan of teb_local planner [closed] - ROS Answers_ Open Source Q&amp;A Forum_files/translateelement.css"></head> <body class="two-col question-page anon lang-en"> <div class="notify" style="display:none"> <div class="content-wrapper"> <a id="closeNotify" onclick="notify.close(true)"></a> </div> </div> <div id="custom-header"> <div align="center"> <br> <table id="topnav-table"> <tbody><tr> <td valign="middle">
+              ROS Resources: 
+            <a href="http://wiki.ros.org/">Documentation</a>
+            |
+            <a href="http://wiki.ros.org/Support">Support</a>
+            |
+            <a href="http://discourse.ros.org/">Discussion Forum</a>
+            |
+            <a href="http://status.ros.org/">Service Status</a>
+            |
+            <a href="http://answers.ros.org/">Q&amp;A answers.ros.org</a> </td> </tr> </tbody></table> <!-- topnav-table --> </div> </div> <!-- template header.html --> <div id="header" class="with-logo"> <div class="content-wrapper"> <div id="userToolsNav"> <a href="https://answers.ros.org/account/signin/?next=/question/256948/solved-robot-doesnt-follow-the-plan-of-teb_local-planner/">Hi there! Please sign in</a> <a class="help" href="https://answers.ros.org/help/" title="help">help</a> </div> <a id="logo" href="https://answers.ros.org/questions/"><img src="./(Solved) Robot doesn&#39;t follow the plan of teb_local planner [closed] - ROS Answers_ Open Source Q&amp;A Forum_files/logoros.png" alt="ROS Answers logo"> </a> <div id="metaNav"> <a id="navTags" href="https://answers.ros.org/tags/">tags</a> <a id="navUsers" href="https://answers.ros.org/users/">users</a> <a id="navBadges" href="https://answers.ros.org/badges/">badges</a> </div> <div class="clean"></div> </div> </div> <!-- end template header.html --> <!-- template secondary_header.html --> <div id="secondaryHeader"> <div class="content-wrapper"> <form action="https://answers.ros.org/questions/" id="searchForm" class="scopes-True-True-False" method="get"> <table width="100%"> <tbody><tr> <td width="1"><a id="homeButton" href="https://answers.ros.org/questions/"><i class="fa fa-home"></i></a></td> <td width="1"><div id="scopeNav"> <a class="scope-selector " href="https://answers.ros.org/questions/scope:all/sort:activity-desc/page:1/">ALL</a> <a class="scope-selector " href="https://answers.ros.org/questions/scope:unanswered/sort:answers-asc/page:1/">UNANSWERED</a> </div></td> <td width="*" class="search-bar"> <div id="searchBar" class="search-bar"><input class="searchInput" type="text" autocomplete="off" value="" name="query" placeholder="Search or ask your question" id="keywords"><input type="submit" value="" name="search" class="searchBtn"><input type="button" value="X" name="reset_query" class="cancelSearchBtn" style="display: none;"><div class="search-drop-menu empty" style="display: none;"><ul></ul><div class="wait-icon-box" style="display: none;"><img src="./(Solved) Robot doesn&#39;t follow the plan of teb_local planner [closed] - ROS Answers_ Open Source Q&amp;A Forum_files/ajax-loader.gif"></div><div class="footer"><button class="submit btn btn-default">Ask Your Question</button></div></div></div> </td> <td width="1"> <a id="askButton" class="button" href="https://answers.ros.org/questions/ask/">
+            Ask Your Question
+        </a> </td> </tr> </tbody></table> </form> </div> </div> <div class="content-wrapper"> <div id="ContentLeft"> <div class="banner"> </div> <div class="post js-question" data-post-id="256948"> <div class="vote-buttons"> <div id="question-img-upvote-256948" class="question-img-upvote post-vote upvote"> </div> <div id="question-vote-number-256948" class="vote-number" title="current number of votes">0</div> <div id="question-img-downvote-256948" class="question-img-downvote post-vote downvote"> </div> <script type="text/javascript">
+    askbot['functions']['renderPostVoteButtons']('question', '256948');
+</script> <a class="twitter-share icon" title="Share this content on twitter"></a> <a class="facebook-share icon" title="Share this content on facebook"></a> <a class="linkedin-share icon" title="Share this content on linkedin"></a> <a class="identica-share icon" title="Share this content on identica"></a> <div id="___plusone_0" style="text-indent: 0px; margin: 0px; padding: 0px; background: transparent; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 24px; height: 15px;"><iframe ng-non-bindable="" frameborder="0" hspace="0" marginheight="0" marginwidth="0" scrolling="no" style="position: static; top: 0px; width: 24px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 15px;" tabindex="0" vspace="0" width="100%" id="I0_1504249844247" name="I0_1504249844247" src="./(Solved) Robot doesn&#39;t follow the plan of teb_local planner [closed] - ROS Answers_ Open Source Q&amp;A Forum_files/fastbutton.html" data-gapiattached="true" title="G+"></iframe></div> </div> <div id="post-id-256948" class="post-content"> <h1 class="js-editable" id="js-question-title-256948" data-get-text-url="/s/get-question-title/?question_id=256948" data-save-text-url="/s/set-question-title/?question_id=256948" data-save-text-param-name="title" data-validated-text-param-name="title" data-min-lines="1" data-editor-type="plain" data-validator="askbot.validators.titleValidator"><div class="js-error"></div> <div class="js-editable-content">(Solved) Robot doesn't follow the plan of teb_local planner [closed]</div><div style="display: none;"><div class="js-simple-editor"><textarea cols="60" rows="10" maxlength="1000"></textarea><pre class="mirror"></pre></div></div> <div class="js-editable-controls">  <button style="display: none;">save</button><button style="display: none;">cancel</button></div> </h1> <ul id="question-tags" class="tags post-tags tags"> <li> <div class="js-tag "><a class="js-tag-name" rel="tag" href="https://answers.ros.org/questions/scope:all/sort:activity-desc/tags:teb_local_planner/page:1/" data-tag-name="teb_local_planner">teb_local_planner</a></div> </li> </ul> <div class="clearfix"></div> <div class="post-body"> <div class="js-editable-hide-post-body-256948"> <div class="post-update-info-container"> <div class="post-update-info"> <p style="line-height:12px;"> <a href="https://answers.ros.org/questions/256948/revisions/"><strong>
+    
+        
+        asked <abbr class="timeago" title="2017-03-14 04:26:48 -0500" style="display: inline;">Mar 14 '17</abbr> </strong></a> </p> <div class="user-card"> <a class="js-avatar-box" href="https://answers.ros.org/users/28380/nguyen/"><img class="js-avatar gravatar" width="32" height="32" src="./(Solved) Robot doesn&#39;t follow the plan of teb_local planner [closed] - ROS Answers_ Open Source Q&amp;A Forum_files/7c921bda7685c95439faa515e3f68248" title="Nguyen" alt="Nguyen gravatar image" style="max-width: 685px; height: auto;"></a> <div class="user-info"> <a href="https://answers.ros.org/users/28380/nguyen/">Nguyen</a> <br> <span class="reputation-score">23</span> <span class="badges" title="Nguyen has 3 gold badges, 4 silver badges and 8 bronze badges"> <span class="badge1">●</span><span class="badgecount">3</span> <span class="badge2">●</span><span class="badgecount">4</span> <span class="badge3">●</span><span class="badgecount">8</span> </span> </div> </div> </div> <div class="post-update-info"> <p style="line-height:12px;"> <a href="https://answers.ros.org/questions/256948/revisions/"><strong>
+    
+        
+        updated <abbr class="timeago" title="2017-04-04 22:59:17 -0500" style="display: inline;">Apr 5 '17</abbr> </strong></a> </p> </div> </div> </div> <div class="js-editable" id="js-post-body-256948" data-get-text-url="/s/get-post-body/?post_id=256948" data-save-text-url="/s/set-post-body/?post_id=256948" data-save-text-param-name="body_text" data-validated-text-param-name="body_html" data-min-lines="10" data-editor-type="markdown" data-validator="askbot.validators.questionDetailsValidator"><div class="js-error"></div> <div class="js-editable-content"><p>Hi all!
+<strong>I had solved my problem. Just change "enable_homotopy_class_planning" to False and "acc_lim_theta" to 0.15. Maybe this will help someone. Sorry for my bad English.</strong></p> <p> Hi all!
+My robot run with teb_local planner. You can see in the video ( <a href="https://www.youtube.com/watch?v=IQAa843tkX4">https://www.youtube.com/watch?v=IQAa8...</a> ). It keep shaking and can't follow the plan. How can i fix it. </p> <p>Here are my config:</p> <pre class="prettyprint"><code><span class="typ">TebLocalPlannerROS</span><span class="pun">:</span><span class="pln">
+ odom_topic</span><span class="pun">:</span><span class="pln"> </span><span class="str">/odom
+ map_frame: /</span><span class="pln">map
+ teb_autosize</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">True</span><span class="pln">
+ dt_ref</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.3</span><span class="pln">
+ dt_hysteresis</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.1</span><span class="pln"> </span><span class="com">#0.1</span><span class="pln">
+ global_plan_overwrite_orientation</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">True</span><span class="pln">
+ global_plan_viapoint_sep</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.5</span><span class="pln">
+ max_global_plan_lookahead_dist</span><span class="pun">:</span><span class="pln"> </span><span class="lit">5.0</span><span class="pln">
+ feasibility_check_no_poses</span><span class="pun">:</span><span class="pln"> </span><span class="lit">5</span><span class="pln">
+ cmd_angle_instead_rotvel</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">False</span><span class="pln">
+ max_vel_x</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.2</span><span class="pln">
+ max_vel_x_backwards</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.2</span><span class="pln">
+ max_vel_theta</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.5</span><span class="pln">
+ acc_lim_x</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.2</span><span class="pln">
+ acc_lim_theta</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.2</span><span class="pln">
+ min_turning_radius</span><span class="pun">:</span><span class="pln"> </span><span class="lit">2.0</span><span class="pln">
+
+ footprint_model</span><span class="pun">:</span><span class="pln"> </span><span class="com"># types: "point", "circular", "two_circles", "line", "polygon"</span><span class="pln">
+   type</span><span class="pun">:</span><span class="pln"> </span><span class="str">"line"</span><span class="pln">
+   line_start</span><span class="pun">:</span><span class="pln"> </span><span class="pun">[</span><span class="lit">0.0</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.0</span><span class="pun">]</span><span class="pln"> 
+   line_end</span><span class="pun">:</span><span class="pln"> </span><span class="pun">[</span><span class="lit">1.772</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.0</span><span class="pun">]</span><span class="pln"> 
+ xy_goal_tolerance</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.5</span><span class="pln">
+ yaw_goal_tolerance</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.3</span><span class="pln">
+ free_goal_vel</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">False</span><span class="pln">
+
+ min_obstacle_dist</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.5</span><span class="pln">
+ include_costmap_obstacles</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">True</span><span class="pln">
+ costmap_obstacles_behind_robot_dist</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> </span><span class="com">#1</span><span class="pln">
+ obstacle_poses_affected</span><span class="pun">:</span><span class="pln"> </span><span class="lit">30</span><span class="pln"> </span><span class="com">#30</span><span class="pln">
+ costmap_converter_plugin</span><span class="pun">:</span><span class="pln"> </span><span class="str">""</span><span class="pln">
+ costmap_converter_spin_thread</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">True</span><span class="pln">
+ costmap_converter_rate</span><span class="pun">:</span><span class="pln"> </span><span class="lit">5</span><span class="pln">
+
+ no_inner_iterations</span><span class="pun">:</span><span class="pln"> </span><span class="lit">5</span><span class="pln">
+ no_outer_iterations</span><span class="pun">:</span><span class="pln"> </span><span class="lit">4</span><span class="pln">
+ optimization_activate</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">True</span><span class="pln">
+ optimization_verbose</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">False</span><span class="pln">
+ penalty_epsilon</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.1</span><span class="pln">
+ weight_max_vel_x</span><span class="pun">:</span><span class="pln"> </span><span class="lit">2</span><span class="pln">
+ weight_max_vel_theta</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> 
+ weight_acc_lim_x</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.0</span><span class="pln">
+
+ weight_acc_lim_theta</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.0</span><span class="pln"> </span><span class="com">#0.0</span><span class="pln">
+ weight_kinematics_nh</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1000</span><span class="pln">
+ weight_kinematics_forward_drive</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span class="pln">
+ weight_kinematics_turning_radius</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> </span><span class="com">#1</span><span class="pln">
+ weight_optimaltime</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span class="pln">
+ weight_obstacle</span><span class="pun">:</span><span class="pln"> </span><span class="lit">50</span><span class="pln"> </span><span class="com">#100</span><span class="pln">
+ weight_dynamic_obstacle</span><span class="pun">:</span><span class="pln"> </span><span class="lit">10</span><span class="pln"> </span><span class="com"># not in use yet</span><span class="pln">
+
+ enable_homotopy_class_planning</span><span class="pun">:</span><span class="pln">  </span><span class="kwd">True</span><span class="pln">
+ enable_multithreading</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">True</span><span class="pln">
+ simple_exploration</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">False</span><span class="pln">
+ max_number_classes</span><span class="pun">:</span><span class="pln"> </span><span class="lit">4</span><span class="pln">
+ selection_cost_hysteresis</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1.0</span><span class="pln">
+
+ selection_obst_cost_scale</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1.0</span><span class="pln">
+ selection_alternative_time_cost</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">False</span><span class="pln">
+ roadmap_graph_no_samples</span><span class="pun">:</span><span class="pln"> </span><span class="lit">15</span><span class="pln">
+ roadmap_graph_area_width</span><span class="pun">:</span><span class="pln"> </span><span class="lit">5</span><span class="pln">
+ h_signature_prescaler</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.5</span><span class="pln">
+ h_signature_threshold</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.1</span><span class="pln">
+ obstacle_keypoint_offset</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.1</span><span class="pln">
+ obstacle_heading_threshold</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.45</span><span class="pln">
+ visualize_hc_graph</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">False</span></code></pre> <p>move_base:</p> <pre class="prettyprint"><code><span class="pln">shutdown_costmaps</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">false</span><span class="pln">
+controller_frequency</span><span class="pun">:</span><span class="pln"> </span><span class="lit">10.0</span><span class="pln"> 
+controller_patience</span><span class="pun">:</span><span class="pln"> </span><span class="lit">15.0</span><span class="pln">
+planner_frequency</span><span class="pun">:</span><span class="pln"> </span><span class="lit">3.0</span><span class="pln">
+planner_patience</span><span class="pun">:</span><span class="pln"> </span><span class="lit">5.0</span><span class="pln">
+oscillation_timeout</span><span class="pun">:</span><span class="pln"> </span><span class="lit">2.0</span><span class="pln">
+oscillation_distance</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.2</span><span class="pln">
+conservative_reset_dist</span><span class="pun">:</span><span class="pln"> </span><span class="lit">3.0</span><span class="pln"> 
+recovery_behavior_enabled</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span><span class="pln">
+clearing_rotation_allowed</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span></code></pre> <p>cost_map:</p> <pre class="prettyprint"><code><span class="pln">footprint</span><span class="pun">:</span><span class="pln"> </span><span class="pun">[[</span><span class="lit">2.3</span><span class="pun">,</span><span class="lit">0.5</span><span class="pun">],</span><span class="pln"> </span><span class="pun">[</span><span class="lit">2.3</span><span class="pun">,</span><span class="pln"> </span><span class="pun">-</span><span class="lit">0.5</span><span class="pun">],[-</span><span class="lit">0.2</span><span class="pun">,</span><span class="pln"> </span><span class="pun">-</span><span class="lit">0.5</span><span class="pun">],</span><span class="pln"> </span><span class="pun">[-</span><span class="lit">0.2</span><span class="pun">,</span><span class="lit">0.5</span><span class="pun">]]</span><span class="pln"> </span><span class="com"># non-circular robot </span><span class="pln">
+transform_tolerance</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.2</span><span class="pln">
+map_type</span><span class="pun">:</span><span class="pln"> costmap
+
+obstacle_layer</span><span class="pun">:</span><span class="pln">
+  enabled</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span><span class="pln">
+  obstacle_range</span><span class="pun">:</span><span class="pln"> </span><span class="lit">2.5</span><span class="pln">
+  raytrace_range</span><span class="pun">:</span><span class="pln"> </span><span class="lit">3.0</span><span class="pln"> 
+  inflation_radius</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1.5</span><span class="pln">
+  track_unknown_space</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span><span class="pln">
+  combination_method</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span class="pln">
+  observation_sources</span><span class="pun">:</span><span class="pln"> scan
+  scan</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">sensor_frame</span><span class="pun">:</span><span class="pln"> laser</span><span class="pun">,</span><span class="pln"> data_type</span><span class="pun">:</span><span class="pln"> </span><span class="typ">LaserScan</span><span class="pun">,</span><span class="pln"> topic</span><span class="pun">:</span><span class="pln"> scan</span><span class="pun">,</span><span class="pln"> marking</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">,</span><span class="pln"> clearing</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">}</span><span class="pln">
+inflation_layer</span><span class="pun">:</span><span class="pln">
+  enabled</span><span class="pun">:</span><span class="pln">              </span><span class="kwd">true</span><span class="pln">
+  cost_scaling_factor</span><span class="pun">:</span><span class="pln">  </span><span class="lit">10.0</span><span class="pln">
+  inflation_radius</span><span class="pun">:</span><span class="pln">     </span><span class="lit">0.5</span><span class="pln">
+static_layer</span><span class="pun">:</span><span class="pln">
+  enabled</span><span class="pun">:</span><span class="pln">              </span><span class="kwd">true</span><span class="pln">
+  map_topic</span><span class="pun">:</span><span class="pln">            </span><span class="str">"/map"</span></code></pre> <p>global_cost map</p> <pre class="prettyprint"><code><span class="pln">global_costmap</span><span class="pun">:</span><span class="pln">
+  global_frame</span><span class="pun">:</span><span class="pln"> </span><span class="str">/map
+  robot_base_frame: /</span><span class="pln">base_link
+  update_frequency</span><span class="pun">:</span><span class="pln"> </span><span class="lit">5.0</span><span class="pln"> 
+  publish_frequency</span><span class="pun">:</span><span class="pln"> </span><span class="lit">2.0</span><span class="pln"> 
+  static_map</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span><span class="pln">
+  rolloing_window</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">false</span><span class="pln">
+  transform_tolerance</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.5</span><span class="pln">
+  plugins</span><span class="pun">:</span><span class="pln">
+    </span><span class="pun">-</span><span class="pln"> </span><span class="pun">{</span><span class="pln">name</span><span class="pun">:</span><span class="pln"> static_layer</span><span class="pun">,</span><span class="pln">            type</span><span class="pun">:</span><span class="pln"> </span><span class="str">"costmap_2d::StaticLayer"</span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">-</span><span class="pln"> </span><span class="pun">{</span><span class="pln">name</span><span class="pun">:</span><span class="pln"> obstacle_layer</span><span class="pun">,</span><span class="pln">          type</span><span class="pun">:</span><span class="pln"> </span><span class="str">"costmap_2d::VoxelLayer"</span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">-</span><span class="pln"> </span><span class="pun">{</span><span class="pln">name</span><span class="pun">:</span><span class="pln"> inflation_layer</span><span class="pun">,</span><span class="pln">         type</span><span class="pun">:</span><span class="pln"> </span><span class="str">"costmap_2d::InflationLayer"</span><span class="pun">}</span></code></pre> <p>local_cost map</p> <pre class="prettyprint"><code><span class="pln">local_costmap</span><span class="pun">:</span><span class="pln">
+  global_frame</span><span class="pun">:</span><span class="pln"> </span><span class="str">/odom #/</span><span class="pln">map
+  robot_base_frame</span><span class="pun">:</span><span class="pln"> </span><span class="pun">/</span><span class="pln">base_link
+  update_frequency</span><span class="pun">:</span><span class="pln"> </span><span class="lit">5.0</span><span class="pln"> 
+  publish_frequency</span><span class="pun">:</span><span class="pln"> </span><span class="lit">2.0</span><span class="pln"> 
+  static_map</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">false</span><span class="pln">
+  rolling_window</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span><span class="pln">
+  width</span><span class="pun">:</span><span class="pln"> </span><span class="lit">10.0</span><span class="pln">
+  height</span><span class="pun">:</span><span class="pln"> </span><span class="lit">8.0</span><span class="pln">
+  resolution</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.1</span><span class="pln">
+  transform_tolerance</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.5</span><span class="pln"> </span><span class="com">#1 #0.5</span><span class="pln">
+  plugins</span><span class="pun">:</span><span class="pln">
+   </span><span class="pun">-</span><span class="pln"> </span><span class="pun">{</span><span class="pln">name</span><span class="pun">:</span><span class="pln"> static_layer</span><span class="pun">,</span><span class="pln">        type</span><span class="pun">:</span><span class="pln"> </span><span class="str">"costmap_2d::StaticLayer"</span><span class="pun">}</span><span class="pln">
+   </span><span class="pun">-</span><span class="pln"> </span><span class="pun">{</span><span class="pln">name</span><span class="pun">:</span><span class="pln"> obstacle_layer</span><span class="pun">,</span><span class="pln">      type</span><span class="pun">:</span><span class="pln"> </span><span class="str">"costmap_2d::ObstacleLayer"</span><span class="pun">}</span></code></pre> <p>Many thanks!</p> </div><div style="display: none;"><div><div class="clearfix"></div><div class="wmd-container"><div id="wmd-button-bar-1" class="wmd-panel"></div><textarea id="editor-1"></textarea><pre class="mirror"></pre><div class="on-state wmd-previewer-toggle">Preview: (hide)</div><div id="previewer-1" class="wmd-preview"></div></div></div></div> <div class="js-editable-controls"><button style="display: none;">save</button><button style="display: none;">cancel</button></div> </div> </div> <div id="question-controls" class="post-controls">   <span id="question-offensive-flag-256948" class="offensive-flag" title="report as offensive (i.e containing spam, advertising, malicious text, etc.)">  </span>    <script type="text/javascript">
+    askbot['functions']['renderPostControls']('256948');
+</script> </div> <div class="clearfix"></div> <div class="question-status"> <h3>Closed for the following reason
+      <b>the question is answered, right answer was accepted</b> by
+      <i><a href="https://answers.ros.org/users/1112/procopio/">Procópio</a> </i><br>
+      close date 2017-04-13 04:40:50.765095</h3> </div> <div class="comments empty ordering-forward" data-parent-post-type="question" data-parent-post-id="256948"><div class="content"></div><div class="controls"><a class="js-open-editor-btn">add a comment</a></div></div> </div> </div> <div style="clear:both"></div> </div> <div id="ContentRight"> <div class="box vote-buttons"> <h2>Question Tools</h2> <button class="js-follow-question button large off-state" data-is-on="false" data-off-prompt-text="Unfollow" data-on-prompt-text="Follow" data-on-state-text="Following" data-off-state-text="Follow" data-toggle-url="/s/toggle-follow-question/">Follow</button> <div class="clearfix"></div> <div class="js-question-follower-count">
+        
+        
+            1 follower
+        
+    </div> <div class="notify-sidebar"> <p class="rss"> <a href="https://answers.ros.org/feeds/question/256948/" title="subscribe to the rss feed">subscribe to rss feed</a> </p> </div> </div> <div class="clearfix"></div> <div class="box statsWidget"> <div class="clearfix"></div> <h2>Stats</h2> <p>
+        Asked: <strong> <abbr class="timeago" title="2017-03-14 04:26:48 -0500" style="display: inline;">Mar 14 '17</abbr> </strong> </p> <p> 
+        Seen: <strong>149 times</strong> </p> <p>
+        Last updated: <strong title="2017-04-04 22:59:17.929607">Apr 04</strong> </p> </div> <div class="box"> <h2>Related questions</h2> <div class="questions-related"> <p> <a href="https://answers.ros.org/question/233806/ekf_localization_node-system-model-when-fusing-imu-and-odometry/">ekf_localization_node system model when fusing IMU and Odometry</a> </p> <p> <a href="https://answers.ros.org/question/264558/teb_local_planner-stuttering/">teb_local_planner stuttering</a> </p> <p> <a href="https://answers.ros.org/question/260935/twist-message-working-ackermann-type-conversion/">Twist message working &amp; ackermann type conversion</a> </p> <p> <a href="https://answers.ros.org/question/254066/move_base-takes-longer-time-to-update-the-goal-status-why/">move_base takes longer time to update the Goal Status why ?</a> </p> <p> <a href="https://answers.ros.org/question/257181/include-goal-tolerance-in-planning-not-only-when-is-near-to-goal/">include goal tolerance in planning, not only when is near to goal</a> </p> <p> <a href="https://answers.ros.org/question/262459/navigation-stack-with-teb_local_planner-planning-path-through-wall/">navigation stack with teb_local_planner planning path through wall</a> </p> <p> <a href="https://answers.ros.org/question/242236/what-is-the-obstaclecpp-file-in-teb_local_planner-for/">what is the obstacle.cpp file in teb_local_planner for?</a> </p> <p> <a href="https://answers.ros.org/question/250422/robot-behavior-when-keep-an-obstacle-on-the-goal/">Robot behavior when keep an obstacle on the goal</a> </p> <p> <a href="https://answers.ros.org/question/250108/angular-velocity-to-steering-angle-conversion/">Angular velocity to steering angle conversion [closed]</a> </p> <p> <a href="https://answers.ros.org/question/234821/how-does-global-planner-in-teb-local-planner-tutorial-work/">How does global planner in teb local planner tutorial work</a> </p> </div> </div> <div class="box"> </div> </div> </div> <!-- template footer.html --> <div id="ground"> <div class="content-wrapper"> <div class="copyright"> <a href="http://creativecommons.org/licenses/by-sa/3.0/legalcode"> <img class="license-logo" src="./(Solved) Robot doesn&#39;t follow the plan of teb_local planner [closed] - ROS Answers_ Open Source Q&amp;A Forum_files/cc-by-sa.png" title="cc-by-sa" alt="cc-by-sa"> </a>
+                
+                ROS Answers is licensed under Creative Commons Attribution 3.0 Content on this site is licensed under a <a href="http://creativecommons.org/licenses/by-sa/3.0/legalcode">Creative Commons Attribution Share Alike 3.0</a> license.
+
+            </div> <div class="footer-links"> <a href="https://answers.ros.org/about/">about</a><span class="link-separator"> |</span> <a href="https://answers.ros.org/faq/">faq</a><span class="link-separator"> |</span> <a href="https://answers.ros.org/help/" title="help">help</a> <span class="link-separator"> |</span> <a href="https://answers.ros.org/privacy/">privacy policy</a><span class="link-separator"> |</span> <a href="https://answers.ros.org/terms/">terms of service</a> <span class="link-separator"> |</span> <a href="https://answers.ros.org/feedback/?next=/question/256948/solved-robot-doesnt-follow-the-plan-of-teb_local-planner/">
+                give feedback
+            </a> </div> <div class="powered-link"> <a href="http://askbot.com/" target="_blank">
+                Powered by Askbot version 0.7.58
+            </a> </div> <div class="clean"></div> </div> </div> <!-- end template footer.html --> <div id="no-javascript"> <noscript class="noscript" style="padding: 0px; background-color: transparent;">
+        Please note: ROS Answers requires javascript to work properly, please enable javascript in your browser, &lt;a href="https://www.google.com/support/bin/answer.py?answer=23852"&gt;here is how&lt;/a&gt; </noscript> <script type="text/javascript">
+        //IE fix to hide the red margin
+        var noscript = document.getElementsByTagName('noscript')[0];
+        noscript.style.padding = '0px';
+        noscript.style.backgroundColor = 'transparent';
+    </script> </div> <script type="text/javascript">
+    askbot['urls']['mark_read_message'] = '/s/messages/markread/';
+    askbot['urls']['get_tags_by_wildcard'] = '/s/get-tags-by-wildcard/';
+    askbot['urls']['get_tag_list'] = '/s/get-tag-list/';
+    askbot['urls']['follow_user'] = '/followit/follow/user/{{userId}}/';
+    askbot['urls']['unfollow_user'] = '/followit/unfollow/user/{{userId}}/';
+    askbot['urls']['user_signin'] = '/account/signin/';
+    askbot['urls']['getEditor'] = '/s/get-editor/';
+    
+    askbot['urls']['apiGetQuestions'] = '/s/api/get_questions/';
+    askbot['urls']['ask'] = '/questions/ask/';
+	askbot['urls']['questions'] = '/questions/';
+    askbot['settings']['groupsEnabled'] = false;
+    askbot['settings']['static_url'] = '/m/';
+    askbot['settings']['minSearchWordLength'] = 3;
+    askbot['settings']['mathjaxEnabled'] = false;
+    askbot['settings']['sharingSuffixText'] = '';
+    askbot['settings']['errorPlacement'] = 'after-label';
+    askbot['data']['maxCommentLength'] = 300;
+    askbot['settings']['editorType'] = 'markdown';
+    
+    askbot['settings']['commentsEditorType'] = 'rich\u002Dtext';
+    askbot['messages']['askYourQuestion'] = 'Ask Your Question';
+    askbot['messages']['acceptOwnAnswer'] = 'accept or unaccept your own answer';
+    askbot['messages']['followQuestions'] = 'follow questions';
+    
+        askbot['settings']['allowedUploadFileTypes'] = [
+            "jpg", "jpeg", "gif", "bmp", "png", "tiff"
+        ];
+    
+    askbot['data']['haveFlashNotifications'] = false;
+    askbot['data']['activeTab'] = 'questions';
+    askbot['settings']['csrfCookieName'] = '_csrf';
+    
+        askbot['data']['searchUrl'] = '';
+    
+</script> <script type="text/javascript" src="./(Solved) Robot doesn&#39;t follow the plan of teb_local planner [closed] - ROS Answers_ Open Source Q&amp;A Forum_files/8227174696ea.js"></script> <script type="text/javascript">
+    /*<![CDATA[*/
+    $('.mceStatusbar').remove();//a hack to remove the tinyMCE status bar
+    $(document).ready(function(){
+        // focus input on the search bar endcomment
+        var activeTab = askbot['data']['activeTab'];
+        if (inArray(activeTab, ['users', 'questions', 'tags', 'badges'])) {
+            var searchInput = $('#keywords');
+        } else if (activeTab === 'ask') {
+            var searchInput = $('#id_title');
+        } else {
+            var searchInput = undefined;
+            animateHashes();
+        }
+
+        if (searchInput) {
+            searchInput.focus();
+            putCursorAtEnd(searchInput);
+        }
+
+        var haveFullTextSearchTab = inArray(activeTab, ['questions', 'badges', 'ask']);
+        var haveUserProfilePage = $('body').hasClass('user-profile-page');
+        if ((haveUserProfilePage || haveFullTextSearchTab) && searchInput && searchInput.length) {
+            var search = new FullTextSearch();
+            askbot['controllers'] = askbot['controllers'] || {};
+            askbot['controllers']['fullTextSearch'] = search;
+            search.setSearchUrl(askbot['data']['searchUrl']);
+            if (activeTab === 'ask') {
+                search.setAskButtonEnabled(false);
+            }
+            search.decorate(searchInput);
+        } else if (activeTab === 'tags') {
+            var search = new TagSearch();
+            search.decorate(searchInput);
+        }
+
+        if (askbot['data']['userIsAdminOrMod']) {
+            $('body').addClass('admin');
+        }
+        if (askbot['settings']['groupsEnabled']) {
+            askbot['urls']['add_group'] = "/s/add-group/";
+            var group_dropdown = new GroupDropdown();
+            $('.groups-dropdown').append(group_dropdown.getElement());
+        }
+        var userRep = $('#userToolsNav .reputation');
+        if (userRep.length) {
+            var showPermsTrigger = new ShowPermsTrigger();
+            showPermsTrigger.decorate(userRep);
+        }
+    });
+    if (askbot['data']['haveFlashNotifications']) {
+        $('#validate_email_alert').click(function(){notify.close(true)})
+        notify.show();
+    }
+
+    var langNav = $('.lang-nav');
+    if (langNav.length) {
+        var nav = new LangNav();
+        nav.decorate(langNav);
+    }
+    /*]]>*/
+</script> <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script src="./(Solved) Robot doesn&#39;t follow the plan of teb_local planner [closed] - ROS Answers_ Open Source Q&amp;A Forum_files/ga.js" type="text/javascript"></script> <script type="text/javascript">
+    try {
+    var pageTracker = _gat._getTracker('UA-17821189-3');
+    pageTracker._trackPageview();
+    } catch(err) {}
+</script> <div class="js-templates" style="display: none;"><div id="post-id-0" class="comment js-comment" data-post-id="0"><div class="comment-votes"><div id="comment-img-upvote-0" class="upvote js-score"></div></div><div class="comment-content"><div id="post-0-delete" class="comment-delete"><span class="js-delete-icon" title="delete this comment"></span></div><div class="comment-body"></div><div class="comment-controls"><a class="js-avatar-box" href="https://answers.ros.org/question/256948/solved-robot-doesnt-follow-the-plan-of-teb_local-planner/"><img class="js-avatar gravatar" width="16" height="16" src="https://answers.ros.org/question/256948/solved-robot-doesnt-follow-the-plan-of-teb_local-planner/" title="" alt=" gravatar image"></a><a class="author" href="https://answers.ros.org/question/256948/solved-robot-doesnt-follow-the-plan-of-teb_local-planner/"></a><span class="age">&nbsp;(
+    
+        <abbr class="timeago" title="2017-09-01 02:10:42 -0500">2017-09-01 02:10:42 -0500</abbr>
+    )</span><a id="post-0-edit" class="js-edit">edit</a><form action="https://answers.ros.org/s/comment/convert/" method="POST" accept-charset="utf-8" class="convert-comment"><input type="hidden" name="csrfmiddlewaretoken" value="None"><input type="hidden" value="0" name="comment_id"><input type="submit" value="convert to answer"></form></div></div></div><div class="js-simple-editor"><textarea></textarea><pre class="mirror"></pre></div><div class="js-tag  js-deletable-tag"><a class="js-tag-name" rel="tag" href="https://answers.ros.org/questions/scope:all/sort:activity-desc/tags:none/page:1/" data-tag-name="none">none</a><span class="js-delete-icon">×</span></div></div> <script type="text/javascript">
+        
+        askbot['urls']['postComments'] = '/s/post_comments/';
+        askbot['urls']['editComment'] = '/s/edit_comment/';
+        askbot['urls']['deleteComment'] = '/s/comment/delete/';
+        askbot['urls']['convertComment'] = '/s/comment/convert/';
+        askbot['urls']['getComment'] = '/s/comment/get-text/';
+        askbot['urls']['saveDraftAnswer'] = '/s/save-draft-answer/';
+        askbot['urls']['vote_url'] = '/s/vote'
+        askbot['urls']['user_signin'] = '/account/signin/';
+        askbot['urls']['upvote_comment'] = '/s/comment/upvote/';
+        askbot['urls']['delete_post'] = '/s/post/delete/';
+        askbot['urls']['get_html_template'] = '/s/get-html-template/';
+        askbot['urls']['getGroupsList'] = '/s/get-groups-list/';
+        askbot['urls']['publishAnswer'] = '/s/answer/publish/';
+        askbot['urls']['apiV1Questions'] = '/api/v1/questions/';
+        askbot['urls']['mergeQuestions'] = '/s/merge-questions/';
+        
+        askbot['data']['questionAuthorId'] = 28380;
+        askbot['data']['answersSortTab'] = 'votes';
+        askbot['data']['questionId'] = 256948;
+        askbot['data']['threadSlug'] = 'solved-robot-doesnt-follow-the-plan-of-teb_local-planner';
+        askbot['messages']['addComment'] = 'add a comment';
+        askbot['messages']['userNamePrompt'] = 'User name:';
+        askbot['messages']['userEmailPrompt'] = 'Email address:';
+        askbot['messages']['mergeQuestions'] = 'Merge duplicate questions';
+        askbot['messages']['enterDuplicateQuestionId'] = 'Enter duplicate question ID';
+        
+        askbot['settings']['saveCommentOnEnter'] = false;
+        askbot['settings']['tagSource'] = 'user-input';
+        askbot['settings']['enableSharingGoogle'] = true;
+        askbot['settings']['enableEmailAlerts'] = true;
+    </script> <script type="text/javascript">
+    
+    askbot['settings']['tagsAreRequired'] = true
+    askbot['settings']['maxTagLength'] = 40;
+    askbot['messages']['maxTagLength'] = "each tag must be shorter than 40 characters";
+    askbot['settings']['maxTagsPerPost'] = 500;
+    askbot['messages']['maxTagsPerPost'] = "please use 500 tags or less";
+    askbot['messages']['tagLimits'] = "please use up to 500 tags, less than 40 characters each";
+    askbot['urls']['upload'] = '/s/upload/';
+    askbot['settings']['minTitleLength'] = 10;
+    askbot['settings']['minQuestionBodyLength'] = 10;
+    askbot['settings']['minAnswerBodyLength'] = 10;
+    askbot['settings']['minCommentBodyLength'] = 10;
+    askbot['settings']['tag_editor'] = '{\u0022tag_forbidden_first_chars\u0022: \u0022#\u0022, \u0022max_tag_length\u0022: 40, \u0022force_lowercase_tags\u0022: false, \u0022max_tags_per_post\u0022: 500, \u0022messages\u0022: {\u0022wrong_first_char\u0022: \u0022# is not a valid character at the beginning of tags, use only letters and numbers\u0022, \u0022wrong_chars\u0022: \u0022please use letters, numbers and characters \u005C\u0022\u002D+.#\u005C\u0022\u0022, \u0022required\u0022: \u0022tags are required\u0022}, \u0022tags_are_required\u0022: true}';
+    askbot['settings']['tinyMCEPlugins'] = JSON.parse('[]');
+</script> <script type="text/javascript">
+    (function() {
+        askbot['settings']['commentsReversed'] = false;
+        //make images always fit the screen
+        var images = $('.question-page .post-body img');
+        //these breakpoints must match those in css
+        //for explanation see utils.js:LimitedWidthImage
+        var breakpoints = [
+            [980, undefined],
+            [800, 55]
+        ];
+        var maxWidth = 685;
+        images.each(function(idx, item) {
+            var img = new LimitedWidthImage(breakpoints, maxWidth);
+            img.decorate($(item));
+        });
+    })();
+</script> <script type="text/javascript" src="./(Solved) Robot doesn&#39;t follow the plan of teb_local planner [closed] - ROS Answers_ Open Source Q&amp;A Forum_files/9fd5d43b00dc.js"></script> <script type="text/javascript">
+    // define reputation needs for comments
+    askbot['urls']['getPostHtml'] = '/s/get-post-html/';
+    askbot['urls']['retag'] = "/s/questions/256948/retag/";
+
+    
+    
+    askbot['settings']['commentAvatarSize'] = 16;
+
+    $(document).ready(function(){
+        $("#nav_questions").attr('className',"on");
+        $("#" + askbot['data']['answersSortTab']).attr('className',"on");
+
+        Vote.init(
+            askbot['data']['questionId'],
+            askbot['data']['threadSlug'],
+            askbot['data']['questionAuthorId'],
+            askbot['data']['userId']
+        );
+
+        if ((askbot['data']['threadIsClosed'] === false) && askbot['data']['userIsAuthenticated']) {
+            initEditor();
+        }
+
+        lanai.highlightSyntax();
+        $('#btLogin').bind('click', function(){
+            window.location.href='/account/signin/';
+        });
+        if (window.location.hash === 'fmanswer'){
+            $('#fmanswer textarea').focus();
+        }
+
+        if (askbot['settings']['enableSharingGoogle']) {
+            $.getScript("//apis.google.com/js/plusone.js");
+        }
+
+        if (askbot['data']['userId'] === askbot['data']['questionAuthorId']) {
+            $("#fmanswer_button").click(function() {
+                $("#fmanswer").show();
+                $("#fmanswer_button").hide();
+            });
+        }
+
+        if (askbot['data']['userIsAuthenticated']) {
+            var draftHandler = new DraftAnswer();
+            draftHandler.setThreadId(73900);
+            draftHandler.decorate($('body'));
+        }
+
+        var expanders = $('.expander');
+        expanders.each(function(idx, item) {
+            var expanderElement = $(item);
+            var post = expanderElement.closest('.post,.comment');
+            if (post.length === 1) {
+                var expander = new PostExpander();
+                expander.setPostId(post.data('postId'));
+                expander.decorate(expanderElement);
+            }
+        });
+
+        var followBtn = $('.js-follow-question');
+        if (followBtn.length) {
+            var toggle = new AjaxToggle();
+            toggle.setPostData({'question_id': 256948 });
+            toggle.decorate(followBtn);
+            followBtn.bind('askbot.two-state-toggle.success', updateQuestionFollowerCount);
+        }
+    });
+
+    $(window).bind('hashchange', animate_hashes);
+
+    function animate_hashes(){
+      var id_value = window.location.hash;
+      if (id_value != ""){
+        var previous_color = $(id_value).css('background-color');
+        $(id_value).css('backgroundColor', '#FFF8C6');
+        $(id_value).animate(
+            {backgroundColor: '#ff7f2a'}, 1000
+        ).animate({backgroundColor: '#FFF8C6'}, 1000, function(){
+            $(id_value).css('backgroundColor', previous_color);
+        });
+      }
+    }
+
+
+    function initEditor(){
+        $('#editor').TextAreaResizer();
+        //highlight code synctax when editor has new text
+        $("#editor").typeWatch({highlight: false, wait: 3000,
+                         captureLength: 5, callback: lanai.highlightSyntax});
+
+        var display = true;
+        var txt = "[hide preview]";
+        $('#pre-collapse').text(txt);
+        $('#pre-collapse').bind('click', function(){
+            txt = display ? "[show preview]" : "[hide preview]";
+            display = !display;
+            $('#previewer').toggle();
+            $('#pre-collapse').text(txt);
+        });
+        var formElement = $('.js-answer-form');
+        if (formElement.length) {
+            var answerForm = new AnswerForm();
+            answerForm.decorate(formElement);
+        }
+    }
+</script> <script type="text/javascript">
+            for (url_name in askbot['urls']){
+                askbot['urls'][url_name] = cleanUrl(askbot['urls'][url_name]);
+            }
+        </script>  <div id="goog-gt-tt" class="skiptranslate" dir="ltr"><div style="padding: 8px;"><div><div class="logo"><img src="./(Solved) Robot doesn&#39;t follow the plan of teb_local planner [closed] - ROS Answers_ Open Source Q&amp;A Forum_files/translate_24dp.png" width="20" height="20" alt="Google 翻訳"></div></div></div><div class="top" style="padding: 8px; float: left; width: 100%;"><h1 class="title gray">原文</h1></div><div class="middle" style="padding: 8px;"><div class="original-text"></div></div><div class="bottom" style="padding: 8px;"><div class="activity-links"><span class="activity-link">翻訳を改善する</span><span class="activity-link"></span></div><div class="started-activity-container"><hr style="color: #CCC; background-color: #CCC; height: 1px; border: none;"><div class="activity-root"></div></div></div><div class="status-message" style="display: none;"></div></div><iframe name="oauth2relay581896061" id="oauth2relay581896061" src="./(Solved) Robot doesn&#39;t follow the plan of teb_local planner [closed] - ROS Answers_ Open Source Q&amp;A Forum_files/postmessageRelay.html" tabindex="-1" aria-hidden="true" style="width: 1px; height: 1px; position: absolute; top: -100px;"></iframe><div class="goog-te-spinner-pos"><div class="goog-te-spinner-animation"><svg xmlns="http://www.w3.org/2000/svg" class="goog-te-spinner" width="96px" height="96px" viewBox="0 0 66 66"><circle class="goog-te-spinner-path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle></svg></div></div></body></html>

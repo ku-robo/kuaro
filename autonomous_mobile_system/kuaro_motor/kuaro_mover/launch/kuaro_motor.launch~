@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<!-- 2019年08月31日　福田 -->
+<!-- KUAROを駆動させるためのlaunch -->
+<launch>
+
+
+  <!--serial-->
+  <node pkg="serial_communication" type="serial_communication" name="serial_communication" output="screen"/>
+
+  <!-- kuaro_mover-->
+  <node pkg="kuaro_mover" type="kuaro_mover" respawn="false" name="kuaro_mover" output="screen">
+    <rosparam file="$(find kuaro_mover)/all_param_link/kuaro_mover_param.yaml" command="load"/>
+    <rosparam file="$(find kuaro_mover)/all_param_link/move_mode/stop_and_go_param.yaml" command="load"/>
+    <rosparam file="$(find kuaro_mover)/all_param_link/move_mode/joy_con_param.yaml" command="load"/>
+    <rosparam file="$(find kuaro_mover)/all_param_link/joy_con_types/joy_con_type2_param.yaml" command="load"/>
+  </node>
+
+ <!--joy-->
+  <node pkg="joy" type="joy_node" name="joystick"/>
+
+</launch>

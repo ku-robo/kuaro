@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+
+<launch>
+  <master auto="start"/>
+
+
+  <!-- map load -->
+  <arg name="lMap" value="/home/robo/Nakanoshima/map_test/map_henshu_gimp_part2.yaml"/>
+  <node pkg="map_server" type="map_server" name="map" args="$(arg lMap)"/>
+
+
+  <!-- sim -->
+  <include file="$(find kobuki_softnode)/launch/full.launch"/>
+  <arg name="delta_x"   default="0.0"/>
+  <arg name="delta_y"   default="0.0"/>
+  <arg name="delta_yaw" default="0.0"/>
+  <node pkg="fake_localization" name="fake_localization" type="fake_localization">
+    <remap from="base_pose_ground_truth" to="odom"/>
+    <param name="delta_x"   value="$(arg delta_x)"/>
+    <param name="delta_y"   value="$(arg delta_y)"/>
+    <param name="delta_yaw" value="$(arg delta_yaw)"/>
+  </node>
+
+
+  <!-- planner -->
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find 2018_tsukuba_challenge)/param_sim/param_carrot/move_base_params.yaml" command="load"/>
+    <rosparam file="$(find 2018_tsukuba_challenge)/param_sim/param_carrot/costmap_common_global_params.yaml" command="load" ns="global_costmap"/>
+    <rosparam file="$(find 2018_tsukuba_challenge)/param_sim/param_carrot/costmap_common_local_params.yaml" command="load" ns="local_costmap"/>
+    <rosparam file="$(find 2018_tsukuba_challenge)/param_sim/param_carrot/local_costmap_params.yaml" command="load"/>
+    <rosparam file="$(find 2018_tsukuba_challenge)/param_sim/param_carrot/global_costmap_params.yaml" command="load"/>
+    <rosparam file="$(find 2018_tsukuba_challenge)/param_sim/param_carrot/base_local_planner_params.yaml" command="load"/>
+    <rosparam file="$(find 2018_tsukuba_challenge)/param_sim/param_carrot/base_global_planner_params.yaml" command="load"/>
+    <!-- <rosparam file="$(find 2018_tsukuba_challenge)/param_sim/param_carrot/move_slow_and_clear_params.yaml" command="load"/> -->
+    <rosparam file="$(find 2018_tsukuba_challenge)/param_sim/param_carrot/recovery_behaviors.yaml" command="load"/>
+    <rosparam file="$(find 2018_tsukuba_challenge)/param_sim/param_carrot/recovery_mode_params.yaml" command="load"/>
+    <remap from="/cmd_vel" to="mobile_base/commands/velocity"/>
+  </node>
+
+
+  <!-- rviz -->
+  <node pkg="rviz" type="rviz" name="rviz" args="-d /home/robo/catkin_ws/src/2018_tsukuba_challenge/rviz/move_base_2018_sim.rviz"/>
+
+</launch>

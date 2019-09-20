@@ -1,0 +1,16 @@
+GlobalPlanner:
+
+  # グローバルパスの生成に関わるパラメータ
+  lethal_cost: 253
+  neutral_cost: 66
+  cost_factor: 0.55
+
+
+  # 使用できているかわからないパラメータ
+  allow_unknown: true
+  default_tolerance: 0.0
+  visualize_potential: false
+  use_dijkstra: true
+  use_quadratic: true
+  use_grid_path: false
+  old_navfn_behavior: false

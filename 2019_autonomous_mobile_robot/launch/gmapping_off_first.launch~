@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<launch>
+  <master auto="start"/>
+
+<!-- 使用するlaunchを呼び出す-->
+  <include file="$(find 2019_autonomous_mobile_robot)/launch/play.launch">
+    <arg name="launch_name" default="gmapping_off_first_core.launch"/>
+    <arg name="make_dir_flag" default="false"/>
+  </include>
+  
+</launch>
+/home/robo/catkin_ws/src/2019_autonomous_mobile_robot/launch/main_launch/autonomous_core.launch
+/home/robo/catkin_ws/src/2019_autonomous_mobile_robot/launch/main_launch/data_gather_core.launch
+/home/robo/catkin_ws/src/2019_autonomous_mobile_robot/launch/main_launch/gmapping_off_first_core.launch
+/home/robo/catkin_ws/src/2019_autonomous_mobile_robot/launch/main_launch/map_save_core.launch
+/home/robo/catkin_ws/src/2019_autonomous_mobile_robot/launch/main_launch/person_navigation_core.launch
+/home/robo/catkin_ws/src/2019_autonomous_mobile_robot/launch/main_launch/uway_pointmaker_core.launch
+/home/robo/catkin_ws/src/2019_autonomous_mobile_robot/launch/main_launch/waypoint_maker_auto_core.launch

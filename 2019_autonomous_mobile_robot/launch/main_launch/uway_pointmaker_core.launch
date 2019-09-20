@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--*******************************
+*	sample lanunch
+***********************************-->
+
+<launch>
+  <master auto="start"/>
+
+  <!-- 外部変更するための変数  ここでは使わないものもあるが変更するな-->
+  <!-- マップ用のパス-->
+  <arg name="map_path" />
+  <!-- 修正したマップ用のパス-->
+  <arg name="remap_path" />
+  <!-- waypointのパス-->
+  <arg name="waypoint_path" />
+  <!-- 修正したwaypointのパス-->
+  <arg name="rewaypoint_path" />
+  <!-- branchpointのパス-->
+  <arg name="branchpoint_path"/>
+  <!-- 最終的なwaypointのパス-->
+  <arg name="finalwaypoint_path"/>
+  <!-- branchpointのwaypointでのindexのパス-->
+  <arg name="branchpoint_index_path"/>
+  <!-- データ収集bag用のパス-->
+  <arg name="data_gather_bag_path" />
+  <!-- 本番bag用のパス-->
+  <arg name="production_bag_path" />
+
+  <!-- cpp -->
+  <node name="uway_pointmaker_2019" pkg="2019_autonomous_mobile_robot" type="uway_pointmaker_2019" required="true" output="screen">
+    <rosparam file="$(arg remap_path)" command="load"/>
+    <param name="load_file_name" value="$(arg waypoint_path)"/>
+    <param name="output_file_name" value="$(arg rewaypoint_path)"/>
+    <param name="click_width" value="30.0"/>
+  </node>
+
+  <!-- python -->
+  <node name="uway_pointmaker_py" pkg="2019_autonomous_mobile_robot" type="uway.py" required="true" output="screen">
+    <rosparam file="$(arg remap_path)" command="load"/>
+  </node>
+</launch>

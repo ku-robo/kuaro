@@ -1,0 +1,57 @@
+DWAPlannerROS:
+
+# Robot Configuration Parameters
+  # 加速度
+  acc_lim_x: 2.0    # 0.3
+  acc_lim_y: 0.0
+  acc_lim_th: 0.5 # 0.3
+
+  # 速度の絶対値
+  max_trans_vel: 0.5
+  min_trans_vel: 0.1
+
+  # 速度
+  max_vel_x:  0.5  # 0.5
+  min_vel_x:  0.1
+
+  max_vel_y: 0.0
+  min_vel_y: 0.0
+
+  # 角速度
+  max_rot_vel: 1.0  
+  min_rot_vel: 0.4 
+
+  # recovery 
+  max_rotational_vel: 0.5
+  
+  # バックする速度
+  escape_vel: -0.1
+
+# Goal Tolerance Parameters
+  # ゴール時の姿勢、距離
+  laych_xy_goal_tolerance: false
+  yaw_goal_tolerance: 0.70      # 1.57
+  xy_goal_tolerance: 0.50
+ 
+# Forward Simulation Parameters
+  sim_time: 3.0
+  vx_samples: 6
+  vtheta_samples: 20
+
+# Trajectory Scoring Parameters
+  goal_distance_bias: 24.0 
+  path_distance_bias: 32.0 
+  occdist_scale: 0.04       # 0.01
+  forward_point_distance: 0.325
+  stop_time_buffer: 0.2
+  scaling_speed: 0.25
+  max_scaling_factor: 0.2 
+
+# Oscillation Prevention Parameters
+  oscillation_reset_dist: 0.05
+
+# Differential-drive robot configuration
+  holonomic_robot: false
+  max_vel_y: 0.0
+  min_vel_y: 0.0
+  vy_samples: 0

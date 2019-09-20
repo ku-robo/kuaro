@@ -1,0 +1,7 @@
+image: /home/robo/catkin_ws/src/2017_tsukuba_challenge/map/tsukuba_velodyne2d_1014_2_0_10_2_sato_gimp.pgm
+resolution: 0.100000
+origin: [-240.800000, -112.800000, 0.000000]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.196
+

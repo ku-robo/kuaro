@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<!-- 2017年11月01日　秋本 -->
+<!-- つくばチャレンジ本番で使用するlaunch -->
+<launch>
+
+
+
+
+  <!-- map load -->
+  <arg name="map_name" value="/home/robo/つくばシミュ/map/map.yaml"/>
+  <node pkg="map_server" type="map_server" name="map" args="$(arg map_name)"/>
+
+  <!-- rviz -->
+  <node pkg="rviz" type="rviz" name="rviz" args="-d /home/robo/catkin_ws/src/2018_tsukuba_challenge/rviz/move_base_2018.rviz"/>
+
+</launch>

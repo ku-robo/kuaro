@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+
+<!-- 2018年08月12日　福田 -->
+<!-- つくばチャレンジに向けた練習用launch -->
+<launch>
+  <master auto="start"/>
+
+  <!-- off_line_gmapping -->
+  <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
+    <!-- remap  -->
+    <remap from="scan" to="/velodyne_scan"/> <!-- /scan  -->
+    <param name="odom_frame" value="odom_gyro"/>
+    <param name="base_frame" value="base_link"/>
+    <param name="map_frame" value="map"/>
+    <param name="map_update_interval" value="1.0"/>
+    <param name="maxUrange" value="40.0"/>
+    <param name="sigma" value="0.5"/>
+    <param name="kernelSize" value="1"/>
+    <param name="lstep" value="0.05"/>
+    <param name="astep" value="0.05"/>
+    <param name="iterations" value="10"/>
+    <param name="lsigma" value="0.5"/>
+    <param name="ogain" value="3.0"/>
+    <param name="lskip" value="0"/>
+    <param name="srr" value="0.01"/>
+    <param name="srt" value="0.02"/>
+    <param name="str" value="0.01"/>
+    <param name="stt" value="0.02"/>
+    <param name="linearUpdate" value="0.25"/>
+    <param name="angularUpdate" value="0.262"/>
+    <param name="temporalUpdate" value="-1.0"/>
+    <param name="resampleThreshold" value="0.5"/>
+    <param name="particles" value="30"/> <!-- 30 -->
+    <param name="xmin" value="-50.0"/>
+    <param name="ymin" value="-50.0"/>
+    <param name="xmax" value="50.0"/>
+    <param name="ymax" value="50.0"/>
+    <param name="delta" value="0.1"/>
+    <param name="llsamplerange" value="0.001"/>
+    <param name="llsamplestep" value="0.001"/>
+    <param name="lasamplerange" value="0.005"/>
+    <param name="lasamplestep" value="0.005"/>
+  </node>
+
+  <!-- run pointcloud_to_laserscan node -->
+  <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan">
+    <remap from="cloud_in" to="velodyne_points"/>
+    <remap from="scan" to="velodyne_scan"/>
+    <rosparam>
+      target_frame: base_link
+      <!-- # Leave disabled to output scan in pointcloud frame -->
+      transform_tolerance: 0.01
+      min_height: -0.80
+      max_height: 10.00
+      <!-- angle_increment: 0.017453 # M_PI/360.0 -->
+      angle_min: -3.141592
+      angle_max: 3.141592
+      range_min: 1.00
+      range_max: 100.0
+      use_inf: true
+      concurrency_level: 1
+    </rosparam>
+  </node>
+
+</launch>

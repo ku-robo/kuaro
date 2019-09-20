@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<!-- 2017年11月01日　秋本 -->
+<!-- つくばチャレンジ本番で使用するlaunch -->
+<launch>
+
+
+  <!-- webcamera -->
+  <node pkg="uvc_camera" type="uvc_camera_node" name="uvc_camera" output="screen">
+    <param name="width" type="int" value="640" />
+    <param name="height" type="int" value="480" />
+    <param name="fps" type="int" value="10" />
+    <param name="frame" type="string" value="wide_stereo" />
+    <param name="auto_focus" type="bool" value="False" />
+    <param name="focus_absolute" type="int" value="0" />
+    <param name="device" type="string" value="/dev/video0" />
+    <param name="camera_info_url" type="string" value="file://$(find uvc_camera)/example.yaml" />
+  </node>
+
+  <!-- rosbag -->
+  <node pkg="rosbag" type="record" name="test_record" args="--lz4 -O /home/robo/2018_tsukuba/20181015_camera_GPS_data_1/data.bag /tf /image_raw /gps_fix /gps_raw" output="screen"/>
+
+
+  <!-- rviz -->
+  <node pkg="rviz" type="rviz" name="rviz" args="-d /home/robo/catkin_ws/src/2018_tsukuba_challenge/rviz/move_base_2018.rviz"/>
+
+</launch>

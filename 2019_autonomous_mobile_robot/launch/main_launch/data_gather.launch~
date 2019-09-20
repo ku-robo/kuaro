@@ -1,0 +1,190 @@
+<?xml version="1.0"?>
+
+<launch>
+  <master auto="start"/>
+
+<!-- 外部変更するための変数  ここでは使わないものもあるが変更するな-->
+  <!-- マップ用のパス-->
+  <arg name="map_path" />
+  <!-- 修正したマップ用のパス-->
+  <arg name="remap_path" />
+  <!-- waypointのパス-->
+  <arg name="waypoint_path" />
+  <!-- 修正したwaypointのパス-->
+  <arg name="rewaypoint_path" />
+  <!-- データ収集bag用のパス-->
+  <arg name="data_gather_bag_path" />
+  <!-- 本番bag用のパス-->
+  <arg name="production_bag_path" />
+
+  <!-- base_link to base_footprint  -->
+  <node pkg="tf" type="static_transform_publisher" name="basefootprint_to_baselink" args="0 0 0 0 0 0 base_footprint base_link 100"/>
+
+
+  <!-- urg_node_front  -->
+  <node pkg="urg_node" type="urg_node" respawn="false" name="urg_node_front" output="screen">
+    <param name="serial_port" value="/dev/ttyACM1"/>
+    <param name="frame_id" value="laser_front"/>
+    <param name="angle_min" value="-1.1345"/>
+    <param name="angle_max" value="1.1345"/>
+    <remap from="scan" to="scan_front"/>
+  </node>
+  <!-- ロボットの中心からレーザーまでの座標変換 -->
+  <node pkg="tf" type="static_transform_publisher" name="laser_to_base_link_front" args="0.10 0.0 0.20 0.0 0.0 3.14  /base_link /laser_front 100" />
+
+
+  <!-- urg_node_back  -->
+  <node pkg="urg_node" type="urg_node" respawn="false" name="urg_node_back" output="screen">
+    <param name="serial_port" value="/dev/ttyACM2"/>
+    <param name="frame_id" value="laser_back"/>
+    <param name="angle_min" value="-2.2689"/>
+    <param name="angle_max" value="2.2689"/>
+    <remap from="scan" to="scan_back"/>
+  </node>
+  <node pkg="tf" type="static_transform_publisher" name="laser_to_base_link_back" args="-0.45 0.0 0.30 3.14 0.0 0.0 /base_link /laser_back 100" />
+
+
+  <!-- laser_merge launchに混ぜれるようにコードを変えました -->
+  <node pkg="ira_laser_tools" name="laserscan_multi_merger" type="laserscan_multi_merger" output="screen">
+    <param name="destination_frame" value="/base_link"/>
+    <param name="scan_destination_topic" value="/scan"/>
+    <param name="laserscan_topics" value ="/scan_front /scan_back" />
+  </node>
+
+
+  <!-- webcamera -->
+  <node pkg="uvc_camera" type="uvc_camera_node" name="uvc_camera" output="screen">
+    <param name="width" type="int" value="640" />
+    <param name="height" type="int" value="480" />
+    <param name="fps" type="int" value="10" />
+    <param name="frame" type="string" value="wide_stereo" />
+    <param name="auto_focus" type="bool" value="False" />
+    <param name="focus_absolute" type="int" value="0" />
+    <param name="device" type="string" value="/dev/video0" />
+    <param name="camera_info_url" type="string" value="file://$(find uvc_camera)/example.yaml" />
+  </node>
+
+
+  <!-- declare arguments with default values -->
+  <arg name="calibration" default="$(find velodyne_pointcloud)/params/VLP-16-HiRes.yaml"/>
+  <arg name="device_ip" default="" />
+  <arg name="frame_id" default="velodyne" />
+  <arg name="manager" default="$(arg frame_id)_nodelet_manager" />
+  <arg name="max_range" default="130.0" />
+  <arg name="min_range" default="0.4" />
+  <arg name="pcap" default="" />
+  <arg name="port" default="2368" />
+  <arg name="read_fast" default="false" />
+  <arg name="read_once" default="false" />
+  <arg name="repeat_delay" default="0.0" />
+  <arg name="rpm" default="600.0" />
+
+  <!-- start nodelet manager and driver nodelets -->
+  <include file="$(find velodyne_driver)/launch/nodelet_manager.launch">
+    <arg name="device_ip" value="$(arg device_ip)"/>
+    <arg name="frame_id" value="$(arg frame_id)"/>
+    <arg name="manager" value="$(arg manager)" />
+    <arg name="model" value="VLP16"/>
+    <arg name="pcap" value="$(arg pcap)"/>
+    <arg name="port" value="$(arg port)"/>
+    <arg name="read_fast" value="$(arg read_fast)"/>
+    <arg name="read_once" value="$(arg read_once)"/>
+    <arg name="repeat_delay" value="$(arg repeat_delay)"/>
+    <arg name="rpm" value="$(arg rpm)"/>
+  </include>
+
+  <!-- start cloud nodelet -->
+  <include file="$(find velodyne_pointcloud)/launch/cloud_nodelet.launch">
+    <arg name="calibration" value="$(arg calibration)"/>
+    <arg name="manager" value="$(arg manager)" />
+    <arg name="max_range" value="$(arg max_range)"/>
+    <arg name="min_range" value="$(arg min_range)"/>
+  </include>
+
+  <node pkg="tf" type="static_transform_publisher" name="velodyne_to_base_link" args="0.0 0.0 0.0 0.0 0.0 0.0  /base_link /velodyne 100" />
+
+
+  <!--okatech-->
+  <node pkg="okatech_kuaro" type="okatech_kuaro" name="okatech_kuaro" output="screen">
+    <param name="sub_serial_topic" value="/serial_receive"/>
+    <param name="sub_cmdvel_topic" value="/cmd_vel"/>
+    <param name="pub_odom_imu_topic" value="/odom_default"/>
+    <param name="frame_id" value="odom_default"/>
+    <param name="child_frame_id" value="base_footprint_odom_default"/>
+  </node>-->
+
+
+  <!--serial-->
+  <node pkg="serial_communication" type="serial_communication" name="serial_communication" output="screen"/>
+
+
+  <!--joy config-->
+  <include file="$(find turtlebot_teleop)/launch/includes/velocity_smoother.launch.xml"/>
+  <node pkg="okatech_kuaro" type="kuaro_joy" name="kuaro_joy" output="screen">
+    <param name="scale_angular" value="1.2"/>
+    <param name="scale_linear" value="0.8"/>
+    <param name="buttons_deadman" value="5"/>
+    <param name="axis_linear" value="1"/>
+    <param name="axis_angular" value="0"/>
+    <param name="buttons_stop" value="0"/>
+    <param name="buttons_rotation_R" value="5"/>
+    <param name="buttons_rotation_L" value="2"/>
+    <param name="buttons_straight" value="2"/>
+  </node>
+
+
+  <!--joy-->
+  <node pkg="joy" type="joy_node" respawn="false" name="joy_node" output="screen"/>
+
+
+  <!--imu-->
+  <node name="microstrain_3dm_gx5_25_node" pkg="microstrain_3dm_gx5_45" type="microstrain_3dm_gx5_25_node" output="screen">
+    <param name="port" value="/dev/ttyACM0" type="str" />
+    <param name="baudrate" value="115200" type="int" />
+    <param name="device_setup" value="true" type="bool" />
+    <!-- General Settings -->
+    <param name="readback_settings" value="true" type="bool" />
+    <param name="save_settings" value="false" type="bool" />
+    <param name="auto_init" value="true" type="bool" />
+    <!-- AHRS Settings -->
+    <param name="publish_imu" value="false" type="bool" />
+    <param name="imu_raw_rate" value="50" type="int" />
+    <param name="imu_frame_id" value="imu" type="str" />
+    <param name="imu_raw_topic" value="imu_raw/data" type="str" />
+    <!-- Setting manual declination is not yet implemented/testes -->
+    <!-- Declination source 1=None, 2=magnetic, 3=manual -->
+    <param name="declination_source" value="2" type="int" />
+    <param name="declination" value="0.23" type="double" />
+    <param name="publish_imu_filltered" value="true" type="bool" />
+    <param name="imu_filtered_rate" value="100" type="int" />
+    <param name="imu_filtered_topic" value="imu_filtered/data" type="str" />
+  </node>
+
+  <node pkg="tf" type="static_transform_publisher" name="imu_to_base_link" args="0 0 0 0 3.14159 0 /base_link /imu 100" />
+
+
+  <!--imu_transform-->
+  <node pkg="imu_transformer" type="imu_transformer_node" name="imu_data_transformer" output="screen">
+    <remap from="imu_in" to="/imu_filtered"/>
+    <remap from="imu_out" to="/imu_out"/>
+    <param name="target_frame" value="base_link"/>
+  </node>
+
+
+  <!-- odom_imu_combine -->
+  <node pkg="odom_imu_combine" type="odom_imu_combine" name="odom_imu_combine" output="screen">
+    <param name="sub_odom_topic" value="/odom_default"/>
+    <param name="sub_imu_topic" value="/imu_out/data"/>
+    <param name="pub_odom_imu_topic" value="/odom_gyro"/>
+    <param name="frame_id" value="odom_gyro"/>
+    <param name="child_frame_id" value="base_footprint_odomgyro"/>
+  </node>
+
+
+  <!-- rosbag -->
+  <node pkg="rosbag" type="record" name="test_record" args="--lz4 -O $(arg data_gather_bag_path) /cmd_vel /scan /scan_front /scan_back /tf /velodyne_points /imu_filtered/data /imu_out/data /odom_gyro /odom_default /image_raw " output="screen"/>
+
+  <!-- rviz -->
+  <node pkg="rviz" type="rviz" name="rviz" args="-d /home/robo/catkin_ws/src/2018_tsukuba_challenge/rviz/sensor_get.rviz"/>
+  <!-- rvizの設定を呼び出し -->
+</launch>

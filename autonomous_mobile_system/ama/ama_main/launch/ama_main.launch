@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<launch>
+  <master auto="start"/>
+  <!-- 外部変更するための変数  ここでは使わないものもあるが変更するな-->
+  <!-- マップ用のパス-->
+  <arg name="map_path" />
+  <!-- 修正したマップ用のパス-->
+  <arg name="remap_path" />
+  <!-- waypointのパス-->
+  <arg name="waypoint_path" />
+  <!-- 修正したwaypointのパス-->
+  <arg name="rewaypoint_path" />
+  <!-- branchpointのパス-->
+  <arg name="branchpoint_path"/>
+  <!-- 最終的なwaypointのパス-->
+  <arg name="finalwaypoint_path"/>
+  <!-- branchpointのwaypointでのindexのパス-->
+  <arg name="branchpoint_index_path"/>
+  <!-- データ収集bag用のパス-->
+  <arg name="data_gather_bag_path" />
+  <!-- 本番bag用のパス-->
+  <arg name="production_bag_path" />
+
+
+  <!-- ama_main-->
+  <node pkg="ama_main" type="ama_main" respawn="false" name="ama_main" output="screen">
+    <rosparam file="$(find kuaro_mover)/all_param_link/ama_main_param/ama_main_param.yaml" command="load"/>
+    <rosparam file="$(find kuaro_mover)/all_param_link/ama_move_params/move_default_param/move_default_param.yaml" command="load"/>
+    <rosparam file="$(find kuaro_mover)/all_param_link/ama_func_params/func_default_param/func_default_param.yaml" command="load"/>
+    <param name="nextfunc_map_file_name" value="$(arg branchpoint_index_path)" />
+    <param name="FuncDefault/finalwaypoint_path" value="$(arg finalwaypoint_path)" />
+  </node>
+
+  <node pkg="tf" type="static_transform_publisher" name="poly" args="0 0 0 0 0 0 /my_frame /map 100"/>
+
+</launch>

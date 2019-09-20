@@ -1,0 +1,16 @@
+#!/bin/bash
+
+rosbag filter /home/aki/catkin_ws/src/aki_practice/bag_file/new_0914_rinpu2.bag /home/aki/catkin_ws/src/aki_practice/bag_file/filter_test.bag 'topic == "/fixed_odom" or topic == "/gps_odom" or topic == "/gps_raw" or topic == "/hokuyo3d/hokuyo_cloud2" or topic == "/imu/data" or topic == "/odom_gyro" topic == "/scan_back" or topic == "/scan_front" or topic == "/tf_static" or topic == "/tf"'
+
+rosbag filter /home/aki/catkin_ws/src/aki_practice/bag_file/new_0914_rinpu2.bag /home/aki/catkin_ws/src/aki_practice/bag_file/filter_test.bag 'topic == "/fixed_odom" or topic == "/gps_odom" or topic == "/gps_raw" or topic == "/hokuyo3d/hokuyo_cloud2" or topic == "/imu/data" or topic == "/odom_gyro" or topic == "/scan_front" or topic == "/tf_static" or topic == "/tf"'
+
+
+
+
+
+rosbag filter /home/aki/catkin_ws/src/aki_practice/bag_file/new_0913_rinpu1.bag /home/aki/catkin_ws/src/aki_practice/bag_file/filter_test.bag "topic != 'tf' or ((len(m.transforms) > 0 and m.transforms[0].header.frame_id != 'odom') and (len(m.transforms) <= 1 or (len(m.transforms) > 1 and m.transforms[1].header.frame_id != 'odom')) and (len(m.transforms) <= 2 or (len(m.transforms) > 2 and m.transforms[2].header.frame_id != 'odom')) and (len(m.transforms) <= 3 or (len(m.transforms) > 3 and m.transforms[3].header.frame_id != 'odom')) and (len(m.transforms) <= 4 or (len(m.transforms) > 4 and m.transforms[4].header.frame_id != 'odom')))"
+
+
+rosbag filter /home/aki/catkin_ws/src/aki_practice/bag_file/new_0913_rinpu1.bag /home/aki/catkin_ws/src/aki_practice/bag_file/filter_test.bag 'topic == "/fixed_odom" or topic == "/gps_odom" or topic == "/hokuyo3d/hokuyo_cloud2" or topic == "/odom_gyro" or topic == "/scan_front" or topic == "/tf_static" or topic == "/tf" and m.transforms[0].header.frame_id != "/base_footprint" and m.transforms[0].child_frame_id != "/base_link"
+
+rosbag filter /home/aki/catkin_ws/src/aki_practice/bag_file/new_0913_rinpu1.bag /home/aki/catkin_ws/src/aki_practice/bag_file/filter_test.bag 'topic == "/fixed_odom" or topic == "/gps_odom" or topic == "/hokuyo3d/hokuyo_cloud2" or topic == "/odom_gyro" or topic == "/scan_front" or topic == "/tf_static" or topic == "/tf" and m.transforms[0].header.frame_id != "/odom" and m.transforms[1].header.frame_id != "/odom" and m.transforms[2].header.frame_id != "/odom"'

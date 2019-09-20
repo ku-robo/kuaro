@@ -1,0 +1,77 @@
+DWAPlannerROS:
+
+  # ロボットパラメータ
+  # 最大並進速度 (m/s)
+  max_trans_vel: 0.6
+  min_trans_vel: 0.1
+
+  # x方向の速度 (m/s)
+  max_vel_x:  0.6
+  min_vel_x:  0.1
+
+  # y方向の速度 (m/s)
+  max_vel_y: 0.0
+  min_vel_y: 0.0
+
+  # 角速度 (rad/s)
+  max_rot_vel: 1.0 #1.0
+  min_rot_vel: 0.4
+
+  # 加速度 (m/s2)
+  acc_lim_x: 3.0
+  acc_lim_y: 0.0
+  acc_lim_theta: 1.0 #0.1
+  acc_limit_trans: 0.1 #0.1
+
+  # 停止速度 (m/s)
+  trans_stopped_vel: 0.1
+  rot_stopped_vel: 0.1
+
+  # ゴール時の姿勢、距離
+  yaw_goal_tolerance: 1.57   #0.262[rad] -> 15[deg] # 1.57
+  xy_goal_tolerance: 0.50
+
+
+
+  # フォワードシミュレーションパラメータ
+  # フォワードシミュレーション軌跡時間
+  sim_time: 10.0 #4.0
+
+  # よくわからないパラメータ
+  sim_granularity: 0.025
+  angular_sim_granularity: 0.1
+
+  # 速度空間で探索するサンプル数
+  vx_samples: 30
+  vy_samples: 0
+  vtheta_samples: 60
+
+
+
+  # 軌跡スクロールパラメータ
+  # コントローラのパス追従の重み
+  path_distance_bias: 0.1 #32.0
+
+  # 目標地点と制御速度に近いかどうかの重み
+  goal_distance_bias: 24.0
+
+  # 障害物回避のための重み
+  occdist_scale: 0.02 #0.04
+
+  # ロボットから追加スクロール点との距離 (m)
+  forward_point_distance: 0.325
+
+  # ロボット停止に必要な時間 (s)
+  stop_time_buffer: 0.2
+
+  # スケーリング速度 (m/s)
+  scaling_speed: 0.25
+
+  # 最大スケーリング係数
+  max_scaling_factor: 0.2
+
+
+
+  # 不安定な挙動 (Oscillation)を防ぐためのパラメータ, どれだけ移動したら，oscillationフラグがリセットされるか
+  oscillation_reset_dist: 0.05
+  oscillation_reset_angle: 0.2

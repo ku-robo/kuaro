@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <!-- use offline -->
+  <param name="use_sim_time" value="true"/>
+
+  <!-- map load -->
+  <node pkg="map_server" type="map_server" name="map_server" args="/home/robo/map.yaml"/>
+
+  <!-- tf -->
+  <node pkg="tf" type="tf_remap" name="tf_remapper" output="screen">
+    <rosparam param="mappings"> <!--mappings-->
+     <!-- [{old: base_footprint_odom_default, new: base_footprint_odom_default }] -->
+       [{old: base_footprint_odomgyro, new: base_footprint }]<!-- [{old: base_footprint_odom_default, new: base_footprint_odom_default }] -->
+    </rosparam>
+  </node>
+
+  <!-- bag play -->
+  <arg name="bag_file" default="/media/robo/TOSHIBA/618zikkentou.bag"/>
+  <node pkg="rosbag" type="play" name="test_play" args="$(arg bag_file) --clock -r 2.0">
+    <remap from="tf" to="tf_old" />
+  </node>
+
+  <!-- waypoint test -->
+  <node pkg="2018_tsukuba_challenge" type="waypoint_maker_auto_2018" name="waypoint_maker_auto_2018" output="screen">
+    <param name="read_file" value="/home/robo/612_waypoint2_ou.txt"/>
+    <param name="point_distance" value="4.0"/>
+    <param name="deg_thresh" value="15.0"/>
+    <param name="deg_distance" value="1.0"/>
+  </node>
+
+  <!-- pointcloud_to_laserscan -->
+  <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan">
+    <remap from="cloud_in" to="velodyne_points"/>
+    <remap from="scan" to="velodyne_scan"/>
+    <rosparam>
+
+      target_frame: base_link
+      transform_tolerance: 0.01
+      min_height: -0.80
+      max_height: 10.00
+      angle_min: -3.141592
+      angle_max: 3.141592
+      range_min: 1.00
+      range_max: 100.0
+      use_inf: true
+      concurrency_level: 1
+
+      <!-- target_frame: base_link
+      transform_tolerance: 0.01
+      min_height: 0.0
+      max_height: 10.00
+      angle_min: -3.141592
+      angle_max: 3.141592
+      range_min: 1.00
+      range_max: 100.0
+      use_inf: true
+      concurrency_level: 1 -->
+    </rosparam>
+  </node>
+
+  <!-- amcl -->
+  <node pkg="amcl" type="amcl" name="amcl">
+    <remap from="scan" to="velodyne_scan"/>
+    <!-- <remap from="scan" to="scan"/> -->
+
+    <!-- フィルタ関連パラメータ -->
+    <!-- 最小のパーティクル数 -->
+    <param name="min_particles" value="500"/>
+    <!-- 最大のパーティクル数 (多いほど良い、PCのパフォーマンスに応じて設定 -->
+    <param name="max_particles" value="4000"/>
+    <!-- 実際の分布と推定された分布の間の最大エラー -->
+    <param name="kld_err" value="0.05"/>
+    <param name="kld_z" value="0.99"/>
+    <!-- フィルタの更新に必要な並進運動 (メートル単位)　-->
+    <param name="update_min_d" value="0.2"/>
+    <!-- フィルタの更新に必要な回転運動 (ラジアン単位) -->
+    <param name="update_min_a" value="0.2"/>
+    <!-- 再サンプリング間隔 -->
+    <param name="resample_interval" value="1"/>
+    <!-- 変換許容時間 (秒単位) -->
+    <param name="transform_tolerance" value="0.1"/>
+    <!-- 指数の減少率 (slow average weight filter) -->
+    <param name="recovery_alpha_slow" value="0.0"/>
+    <!-- 指数の減少率 (fast average weight filter) -->
+    <param name="recovery_alpha_fast" value="0.0"/>
+
+    <!-- スキャンや移動経路の情報を視覚的に表示する周期 (10Hz = 0.1秒) -->
+    <param name="gui_publish_rate" value="1.0"/>
+
+    <!-- 距離センサパラメータ -->
+    <!-- レーザーの最大距離 (センサに合わせて設定する、メートル単位) -->
+    <param name="laser_max_range" value="100.0"/> <!-- 10??? 2016_09_26 -->
+    <!-- フィルタが更新されるときに使用されている最大のレーザービームの数 -->
+    <param name = "laser_max_beams" value = "30" />
+    <!-- センサモデルのz_hit混合重み (micture weight) -->
+    <param name="laser_z_hit" value="0.5"/>
+    <!-- センサのz_short混合重み (micture weight) -->
+    <param name="laser_z_short" value="0.05"/>
+    <!-- センサのz_max混合重み (micture weight) -->
+    <param name="laser_z_max" value="0.05"/>
+    <!-- センサのz_rand混合重み (micture weight) -->
+    <param name="laser_z_rand" value="0.5"/>
+    <!-- センサのz_hitを使用したガウスモデルの標準偏差 -->
+    <param name="laser_sigma_hit" value="0.2"/>
+    <!-- センサのz_shortの指数関数パラメータ -->
+    <param name="laser_lambda_short" value="0.1"/>
+    <!-- likelihood_field方式センサのための障害物との最大距離 -->
+    <param name="laser_likelihood_max_dist" value="2.0"/>
+    <!-- センサタイプ (likelihood_fieldとbeam選択) -->
+    <param name="laser_model_type" value="likelihood_field"/>
+
+    <!-- オドメトリ関連パラメータ -->
+    <!-- ロボット移動方式の "diff"と "omni"が選択可能である。 -->
+    <param name="odom_model_type" value="diff"/>
+    <!-- 回転運動のとき、予想されるオドメトリの回転運動量推定ノイズ -->
+    <param name="odom_alpha1" value="0.2"/>
+    <!-- 並進運動のとき、予想されるオドメトリの回転運動量推定ノイズ -->
+    <param name="odom_alpha2" value="0.2"/>
+    <!-- 並進運動のとき、予想されるオドメトリの並進運動量推定ノイズ -->
+    <param name="odom_alpha3" value="0.8"/> <!-- 0.4 -->
+    <!-- 回転運動のとき、予想されるオドメトリの並進運動量推定ノイズ -->
+    <param name="odom_alpha4" value="0.2"/>
+    <!-- オドメトリフレームID -->
+    <param name="odom_frame_id" value="odom_gyro"/> <!-- 2016_09_26  odom_default-->
+  </node>
+
+  <!-- rviz -->
+  <node pkg="rviz" type="rviz" name="rviz" args=" -d /home/robo/catkin_ws/src/2018_tsukuba_challenge/rviz/waypoint_maker_auto.rviz"/>
+
+</launch>
